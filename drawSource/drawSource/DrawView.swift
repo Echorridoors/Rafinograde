@@ -44,8 +44,8 @@ class DrawView: UIView {
 		
 		for line in lines
 		{
-			var mirrorStart = self.frame.size.width/2 - ( line.start.x * 0.5 - self.frame.size.width/2 )
-			var mirrorEnd = self.frame.size.width/2 - ( line.end.x * 0.5 - self.frame.size.width/2 )
+			var mirrorStart = self.frame.size.width/2 - ( line.start.x - self.frame.size.width/2 )
+			var mirrorEnd = self.frame.size.width/2 - ( line.end.x - self.frame.size.width/2 )
 			
 			
 			CGContextMoveToPoint(context, mirrorStart, line.start.y)
