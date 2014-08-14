@@ -51,7 +51,26 @@ class ViewController: UIViewController {
 		theDrawView.modeMirrorX = "1"
 	}
 	@IBAction func modeMirrorY(sender: AnyObject) {
+		var theDrawView = drawView as DrawView
+		theDrawView.modeMirrorY = "1"
 	}
+	
+	@IBAction func modeThick(sender: AnyObject) {
+		var theDrawView = drawView as DrawView
+		theDrawView.modeThick = "1"
+	}
+	
+	@IBAction func modeRounded(sender: AnyObject) {
+		var theDrawView = drawView as DrawView
+		theDrawView.modeRounded = "1"
+	}
+	
+	@IBAction func optionUndo(sender: AnyObject) {
+		
+	}
+	
+	
+	
 	// MARK: - Misc
 	
 	override func prefersStatusBarHidden() -> Bool {

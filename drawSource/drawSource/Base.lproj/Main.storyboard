@@ -41,6 +41,19 @@
                                     <action selector="colorTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="VAQ-kx-CVh"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lW7-mT-G47" userLabel="optionUndo">
+                                <rect key="frame" x="190" y="0.0" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
+                                <state key="normal" title="undo">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="colorTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="L83-l7-MnG"/>
+                                    <action selector="optionUndo:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gUZ-aP-SKK"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RBC-AW-qFj">
                                 <rect key="frame" x="130" y="0.0" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -87,6 +100,31 @@
                                 </state>
                                 <connections>
                                     <action selector="modeMirrorY:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="FlU-4m-k8i"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3OV-4M-R1n" userLabel="modeThick">
+                                <rect key="frame" x="190" y="30" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
+                                <state key="normal" title="fat">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="modeThick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="VH8-I1-U1R"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fHb-zi-eia" userLabel="modeRounded">
+                                <rect key="frame" x="240" y="30" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
+                                <state key="normal" title="rounded">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="modeRounded:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="oaJ-Hr-BBT"/>
+                                    <action selector="modeThick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="llU-Xk-vyq"/>
                                 </connections>
                             </button>
                         </subviews>

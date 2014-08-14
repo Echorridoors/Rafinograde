@@ -14,7 +14,11 @@ class DrawView: UIView {
 	var lastPoint: CGPoint!
 	var drawColor = UIColor.blackColor()
 	var modeMirrorX = "0"
+	var modeMirrorY = "0"
 	var modeGeometric = "0"
+	var modeThick = "0"
+	var modeRounded = "0"
+	var modeGridLarge = "0"
 	
 	override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
 	{
@@ -24,7 +28,7 @@ class DrawView: UIView {
 	override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!)
 	{
 		var newPoint = touches.anyObject().locationInView(self)
-		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor, modeMirrorX: modeMirrorX, modeGeometric: modeGeometric))
+		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor, modeMirrorX: modeMirrorX, modeGeometric: modeGeometric, modeMirrorY: modeMirrorY, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
 		lastPoint = newPoint
 		
 		self.setNeedsDisplay()
@@ -35,14 +39,18 @@ class DrawView: UIView {
 		
 		var context = UIGraphicsGetCurrentContext()
 		CGContextBeginPath(context)
-		CGContextSetLineCap(context, kCGLineCapRound)
+		CGContextSetLineCap(context, kCGLineCapSquare)
 		CGContextSetLineWidth(context, 1)
+		
 		for line in lines
 		{
 			var startX = line.start.x
 			var startY = line.start.y
 			var endX = line.end.x
 			var endY = line.end.y
+			
+			if line.modeThick == "1" { CGContextSetLineWidth(context, 18) }
+			if line.modeRounded == "1" { CGContextSetLineCap(context, kCGLineCapRound) }
 			
 			if line.modeGeometric == "1"
 			{
@@ -51,6 +59,12 @@ class DrawView: UIView {
 				endX = CGFloat(Int(line.end.x/20)*20)
 				endY = CGFloat(Int(line.end.y/20)*20)
 			}
+			
+			if startX == endX && startY == endY
+			{
+				continue
+			}
+			
 			
 			CGContextMoveToPoint(context, startX,startY)
 			CGContextAddLineToPoint(context, endX, endY)
