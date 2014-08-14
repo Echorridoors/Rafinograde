@@ -41,6 +41,12 @@ class ViewController: UIViewController {
 		theDrawView.drawColor = color
 		
 	}
+	
+	// MARK: - Misc
+	
+	override func prefersStatusBarHidden() -> Bool {
+		return true
+	}
 
 }
 
