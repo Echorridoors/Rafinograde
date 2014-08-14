@@ -42,6 +42,16 @@ class ViewController: UIViewController {
 		
 	}
 	
+	@IBAction func modeGeometric(sender: AnyObject) {
+		var theDrawView = drawView as DrawView
+		theDrawView.modeGeometric = "1"
+	}
+	@IBAction func modeMirrorX(sender: AnyObject) {
+		var theDrawView = drawView as DrawView
+		theDrawView.modeMirrorX = "1"
+	}
+	@IBAction func modeMirrorY(sender: AnyObject) {
+	}
 	// MARK: - Misc
 	
 	override func prefersStatusBarHidden() -> Bool {

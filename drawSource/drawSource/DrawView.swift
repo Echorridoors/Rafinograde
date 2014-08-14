@@ -13,6 +13,8 @@ class DrawView: UIView {
 	var lines:[Line] = []
 	var lastPoint: CGPoint!
 	var drawColor = UIColor.blackColor()
+	var modeMirrorX = "0"
+	var modeGeometric = "0"
 	
 	override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
 	{
@@ -22,7 +24,7 @@ class DrawView: UIView {
 	override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!)
 	{
 		var newPoint = touches.anyObject().locationInView(self)
-		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor))
+		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor, modeMirrorX: modeMirrorX, modeGeometric: modeGeometric))
 		lastPoint = newPoint
 		
 		self.setNeedsDisplay()
@@ -30,7 +32,6 @@ class DrawView: UIView {
 	
 	override func drawRect(rect: CGRect)
 	{
-		var settings = ["mirrorX":"1","snap":"1"]
 		
 		var context = UIGraphicsGetCurrentContext()
 		CGContextBeginPath(context)
@@ -43,7 +44,7 @@ class DrawView: UIView {
 			var endX = line.end.x
 			var endY = line.end.y
 			
-			if settings["snap"] == "1"
+			if line.modeGeometric == "1"
 			{
 				startX = CGFloat(Int(line.start.x/20)*20)
 				startY = CGFloat(Int(line.start.y/20)*20)
@@ -55,15 +56,16 @@ class DrawView: UIView {
 			CGContextAddLineToPoint(context, endX, endY)
 			CGContextSetStrokeColorWithColor(context, line.color.CGColor)
 			CGContextStrokePath(context)
-			if settings["mirrorX"] == "1"
+			
+			if line.modeMirrorX == "1"
 			{
-					var mirrorStart = self.frame.size.width/2 - ( startX - self.frame.size.width/2 )
-					var mirrorEnd = self.frame.size.width/2 - ( endX - self.frame.size.width/2 )
-					
-					CGContextMoveToPoint(context, mirrorStart, startY)
-					CGContextAddLineToPoint(context, mirrorEnd, endY)
-					CGContextSetStrokeColorWithColor(context, line.color.CGColor)
-					CGContextStrokePath(context)
+				var mirrorStart = self.frame.size.width/2 - ( startX - self.frame.size.width/2 )
+				var mirrorEnd = self.frame.size.width/2 - ( endX - self.frame.size.width/2 )
+				
+				CGContextMoveToPoint(context, mirrorStart, startY)
+				CGContextAddLineToPoint(context, mirrorEnd, endY)
+				CGContextSetStrokeColorWithColor(context, line.color.CGColor)
+				CGContextStrokePath(context)
 				
 			}
 		}
