@@ -30,29 +30,44 @@ class DrawView: UIView {
 	
 	override func drawRect(rect: CGRect)
 	{
+		var settings = ["mirrorX":"1","snap":"1"]
+		
 		var context = UIGraphicsGetCurrentContext()
 		CGContextBeginPath(context)
 		CGContextSetLineCap(context, kCGLineCapRound)
 		CGContextSetLineWidth(context, 1)
 		for line in lines
 		{
-			CGContextMoveToPoint(context, line.start.x, line.start.y)
-			CGContextAddLineToPoint(context, line.end.x, line.end.y)
+			var startX = line.start.x
+			var startY = line.start.y
+			var endX = line.end.x
+			var endY = line.end.y
+			
+			if settings["snap"] == "1"
+			{
+				startX = CGFloat(Int(line.start.x/20)*20)
+				startY = CGFloat(Int(line.start.y/20)*20)
+				endX = CGFloat(Int(line.end.x/20)*20)
+				endY = CGFloat(Int(line.end.y/20)*20)
+			}
+			
+			CGContextMoveToPoint(context, startX,startY)
+			CGContextAddLineToPoint(context, endX, endY)
 			CGContextSetStrokeColorWithColor(context, line.color.CGColor)
 			CGContextStrokePath(context)
-		}
-		
-		for line in lines
-		{
-			var mirrorStart = self.frame.size.width/2 - ( line.start.x - self.frame.size.width/2 )
-			var mirrorEnd = self.frame.size.width/2 - ( line.end.x - self.frame.size.width/2 )
-			
-			
-			CGContextMoveToPoint(context, mirrorStart, line.start.y)
-			CGContextAddLineToPoint(context, mirrorEnd, line.end.y)
-			CGContextSetStrokeColorWithColor(context, line.color.CGColor)
-			CGContextStrokePath(context)
+			if settings["mirrorX"] == "1"
+			{
+					var mirrorStart = self.frame.size.width/2 - ( startX - self.frame.size.width/2 )
+					var mirrorEnd = self.frame.size.width/2 - ( endX - self.frame.size.width/2 )
+					
+					CGContextMoveToPoint(context, mirrorStart, startY)
+					CGContextAddLineToPoint(context, mirrorEnd, endY)
+					CGContextSetStrokeColorWithColor(context, line.color.CGColor)
+					CGContextStrokePath(context)
+				
+			}
 		}
 	}
+	
 
 }
