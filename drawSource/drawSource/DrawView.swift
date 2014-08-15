@@ -12,7 +12,7 @@ class DrawView: UIView {
 	
 	var lines:[Line] = []
 	var lastPoint: CGPoint!
-	var drawColor = UIColor.blackColor()
+	var modeColor = "Ch"
 	var modeMirror = "Mr"
 	var modeGeometric = "Gs"
 	var modeThick = "T4"
@@ -29,7 +29,7 @@ class DrawView: UIView {
 	override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!)
 	{
 		var newPoint = touches.anyObject().locationInView(self)
-		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor, modeMirror: modeMirror, modeGeometric: modeGeometric, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
+		lines.append(Line(start: lastPoint, end: newPoint, color: modeColorPaint(), modeMirror: modeMirror, modeGeometric: modeGeometric, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
 		lastPoint = newPoint
 		
 		if lines.count > 2500
@@ -42,9 +42,30 @@ class DrawView: UIView {
 		self.setNeedsDisplay()
 	}
 	
+	func modeColorPaint() -> UIColor
+	{
+		if self.modeColor == "Ch"
+		{
+			return UIColor.purpleColor()
+		}
+		else
+		{
+			return UIColor.blackColor()
+		}		
+	}
+	
 	func valueRound( value:CGFloat, grid:CGFloat) -> CGFloat
 	{
 		return CGFloat( (Int(value/grid) * Int(grid)) )
+	}
+	
+	func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+		return UIColor(
+			red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+			green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+			blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+			alpha: CGFloat(1.0)
+		)
 	}
 	
 	override func drawRect(rect: CGRect)
@@ -57,7 +78,6 @@ class DrawView: UIView {
 		
 		var gridUnit:CGFloat = self.setUnit/2
 		
-		
 		var lineId = 0
 		
 		for line in lines
@@ -67,21 +87,26 @@ class DrawView: UIView {
 			var startX = line.start.x
 			var startY = line.start.y
 			var endX = line.end.x
-			var endY = line.end.y
+			var endY = line.end.y			
 			
+			// Colour Modes
+			if line.color == UIColor.purpleColor()
+			{
+				lineId += 1
+				let array = [
+					UIColorFromRGB(0xffa726),
+					UIColorFromRGB(0xef1180),
+					UIColorFromRGB(0xb02389),
+					UIColorFromRGB(0xe65a4d),
+					UIColorFromRGB(0xffef04),
+					UIColorFromRGB(0x20c6e0),
+					UIColorFromRGB(0x3580c4)
+				]
+				let colorIndex = (lineId+lines.count)/20 % array.count
+				color = array[colorIndex].CGColor
+			}
 			
-			// Test
-			lineId += 1
-			let array = [UIColor.orangeColor(), UIColor.purpleColor(), UIColor.blueColor(), UIColor.yellowColor()]
-//			let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
-			let randomIndex = (lineId+lines.count)/6 % array.count
-			color = array[randomIndex].CGColor
-			
-			
-			
-			
-			
-			
+			// Thickness Modes
 			if line.modeThick == "T1" { CGContextSetLineWidth(context, 1) }
 			if line.modeThick == "T2" { CGContextSetLineWidth(context, gridUnit/3-2) }
 			if line.modeThick == "T3" { CGContextSetLineWidth(context, gridUnit/2-2) }

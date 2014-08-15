@@ -36,6 +36,7 @@ class ViewController: UIViewController {
 		modeMirrorToggle()
 		modeThickToggle()
 		modeGeometricToggle()
+		modeColorToggle()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -159,25 +160,24 @@ class ViewController: UIViewController {
 		modeMirror.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 	}
 	
+	// Color
 	
 	@IBAction func modeColor(sender: AnyObject)
 	{
-		var theDrawView = drawView as DrawView
-		var color: UIColor!
-		if( theDrawView.drawColor == UIColor.redColor() ){
-			color = UIColor.blackColor()
-		}
-		else{
-			color = UIColor.redColor()
-		}
-		theDrawView.drawColor = color
-		
-		NSLog("> MODE | %@", theDrawView.drawColor)
+		modeColorToggle()
 	}
 	
 	func modeColorToggle()
 	{
+		var theDrawView = drawView as DrawView
 		
+		var modes = ["Cr","Ch"]
+		var modesIndex = find(modes, theDrawView.modeColor)!
+		var modeTarget = modesIndex+1
+		if modeTarget > modes.count-1{ modeTarget = 0	}
+		theDrawView.modeColor = modes[modeTarget]
+		modeColor.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
+		theDrawView.setNeedsDisplay()
 	}
 	
 	// Geometric
