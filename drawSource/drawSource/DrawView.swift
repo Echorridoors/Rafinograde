@@ -20,6 +20,8 @@ class DrawView: UIView {
 	var modeRounded = "0"
 	var modeGridLarge = "0"
 	
+	var setUnit: CGFloat!
+	
 	override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
 	{
 		lastPoint = touches.anyObject().locationInView(self)
@@ -31,7 +33,19 @@ class DrawView: UIView {
 		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor, modeMirrorX: modeMirrorX, modeGeometric: modeGeometric, modeMirrorY: modeMirrorY, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
 		lastPoint = newPoint
 		
+		if lines.count > 2000
+		{
+			lines = lines.reverse()
+			lines.removeLast()
+			lines = lines.reverse()
+		}
+		
 		self.setNeedsDisplay()
+	}
+	
+	func valueRound( value:CGFloat, grid:CGFloat) -> CGFloat
+	{
+		return CGFloat( (Int(value/grid) * Int(grid)) )
 	}
 	
 	override func drawRect(rect: CGRect)
@@ -42,6 +56,8 @@ class DrawView: UIView {
 		CGContextSetLineCap(context, kCGLineCapSquare)
 		CGContextSetLineWidth(context, 1)
 		
+		var gridUnit:CGFloat = self.setUnit/3
+		
 		for line in lines
 		{
 			var startX = line.start.x
@@ -50,17 +66,16 @@ class DrawView: UIView {
 			var endY = line.end.y
 			
 			
-			if line.modeThick == "1" { CGContextSetLineWidth(context, 18) }
+			if line.modeThick == "1" { CGContextSetLineWidth(context, gridUnit-2) }
 			if line.modeRounded == "1" { CGContextSetLineCap(context, kCGLineCapRound) }
 			
 			if line.modeGeometric == "1"
 			{
-				startX = CGFloat(Int(line.start.x/20)*20)
-				startY = CGFloat(Int(line.start.y/20)*20)
-				endX = CGFloat(Int(line.end.x/20)*20)
-				endY = CGFloat(Int(line.end.y/20)*20)
+				startX = valueRound(line.start.x, grid: gridUnit)
+				startY = valueRound(line.start.y, grid: gridUnit)
+				endX = valueRound(line.end.x, grid: gridUnit)
+				endY = valueRound(line.end.y, grid: gridUnit)
 			}
-			
 			
 			if startX == endX && startY == endY
 			{

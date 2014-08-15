@@ -45,6 +45,9 @@ class ViewController: UIViewController {
 		screenHeight = self.view.frame.size.height
 		
 		
+		var theDrawView = drawView as DrawView
+		theDrawView.setUnit = tileSize
+		
 		// Interfaces
 		interfaceOptions.frame = CGRectMake(tileSize, 0, screenWidth-(2*tileSize), tileSize)
 		interfaceModes.frame = CGRectMake(tileSize, screenHeight-tileSize, screenWidth-(2*tileSize), tileSize)
@@ -89,7 +92,6 @@ class ViewController: UIViewController {
 	
 	func templateGrid()
 	{
-		
 		var lineView = UIView(frame: CGRectMake(tileSize, tileSize, 1, screenHeight-(2*tileSize)))
 		lineView.backgroundColor = UIColor.whiteColor()
 		self.gridView.addSubview(lineView)
@@ -106,26 +108,29 @@ class ViewController: UIViewController {
 		lineView.backgroundColor = UIColor.whiteColor()
 		self.gridView.addSubview(lineView)
 		
-//		var tileSize = self.view.frame.size.width/8
-//		var i = 0
-//		while i < 24*4
-//		{
-//			var lineView = UIView(frame: CGRectMake(0, 0, screenWidth-(2*tileSize)+1, 1))
-//			
-//			if i == 0 { lineView.backgroundColor = UIColor(patternImage:UIImage(named:"tile.1.png")).colorWithAlphaComponent(0.5) }
-//			else if i % 24 == 0 { lineView.backgroundColor = UIColor(patternImage:UIImage(named:"tile.3.png")).colorWithAlphaComponent(0.5) }
-//			else if i % 4 == 2 { lineView.backgroundColor = UIColor(patternImage:UIImage(named:"tile.1.png")).colorWithAlphaComponent(0.5) }
-//			else { lineView.backgroundColor = UIColor(patternImage:UIImage(named:"tile.1.png")).colorWithAlphaComponent(0.5) }
-//			
-//			self.gridView.addSubview(lineView)
-//			
-//			i = i + 1
-//		}
+		var x:CGFloat = 1
+		while x < 18
+		{
+			var y:CGFloat = 1
+			while y < 30
+			{
+				var posX:CGFloat =  CGFloat( Int( tileSize+(tileSize/3*x) ) )
+				var posY:CGFloat =  CGFloat( Int( tileSize+(tileSize/3*y) ) )
+				
+				var lineView = UIView(frame: CGRectMake( posX, posY, 1, 1))
+				lineView.backgroundColor = UIColor.whiteColor()
+				self.gridView.addSubview(lineView)
+				
+				y = y + 1
+			}
+			
+			x = x + 1
+		}
 	}
-	
 	
 	@IBAction func optionClear(sender: AnyObject)
 	{
+		NSLog("> OPTI | Clear")
 		var theDrawView = drawView as DrawView
 		theDrawView.lines = []
 		theDrawView.setNeedsDisplay()
@@ -135,13 +140,15 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		var color: UIColor!
-		if( sender.tag == 1){
-			color = UIColor.redColor()
+		if( theDrawView.drawColor == UIColor.redColor() ){
+			color = UIColor.blackColor()
 		}
 		else{
 			color = UIColor.redColor()
 		}
 		theDrawView.drawColor = color
+		
+		NSLog("> MODE | %@", theDrawView.drawColor)
 	}
 	@IBAction func modeGeometric(sender: AnyObject)
 	{
