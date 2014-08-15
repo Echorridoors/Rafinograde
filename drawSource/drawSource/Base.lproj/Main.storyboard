@@ -80,7 +80,7 @@
                                             <action selector="modeGeometric:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gdn-bX-3ia"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KBx-dB-VK6" userLabel="modeMirrorX">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KBx-dB-VK6" userLabel="modeMirror">
                                         <rect key="frame" x="50" y="127" width="60" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
@@ -89,7 +89,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="modeMirrorX:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="rcL-Ni-yOO"/>
+                                            <action selector="modeMirror:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="LAY-l4-xLU"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3OV-4M-R1n" userLabel="modeThick">
@@ -134,7 +134,7 @@
                         <outlet property="interfaceOptions" destination="Zc9-Ix-Y4t" id="zMy-6f-P29"/>
                         <outlet property="modeColor" destination="3TP-DG-Lsw" id="4HR-m4-D9Z"/>
                         <outlet property="modeGeometric" destination="mdK-ZK-Rmn" id="8Gv-pM-a0F"/>
-                        <outlet property="modeMirrorX" destination="KBx-dB-VK6" id="AHE-w8-2Xc"/>
+                        <outlet property="modeMirror" destination="KBx-dB-VK6" id="rRk-BY-Q4U"/>
                         <outlet property="modeRounded" destination="fHb-zi-eia" id="MEZ-pS-c1V"/>
                         <outlet property="modeThick" destination="3OV-4M-R1n" id="MzR-ZY-oaT"/>
                         <outlet property="optionClear" destination="AUZ-ZF-VN7" id="jBi-hA-Su0"/>

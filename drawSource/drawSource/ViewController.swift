@@ -17,7 +17,7 @@ class ViewController: UIViewController {
 	@IBOutlet var optionUndo: UIButton!
 	
 	@IBOutlet var modeGeometric: UIButton!
-	@IBOutlet var modeMirrorX: UIButton!
+	@IBOutlet var modeMirror: UIButton!
 	@IBOutlet var modeThick: UIButton!
 	@IBOutlet var modeRounded: UIButton!
 	@IBOutlet var modeColor: UIButton!
@@ -63,9 +63,9 @@ class ViewController: UIViewController {
 		optionUndo.setTitle("Un", forState: UIControlState.Normal)
 		
 		// Modes
-		modeMirrorX.frame = CGRectMake(0, 0, tileSize, tileSize)
-		modeMirrorX.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		modeMirrorX.setTitle("Mi", forState: UIControlState.Normal)
+		modeMirror.frame = CGRectMake(0, 0, tileSize, tileSize)
+		modeMirror.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
+		modeMirror.setTitle("Mi", forState: UIControlState.Normal)
 		
 		// Geometric
 		modeGeometric.frame = CGRectMake(tileSize, 0, tileSize, tileSize)
@@ -136,6 +136,26 @@ class ViewController: UIViewController {
 		theDrawView.setNeedsDisplay()
 	}
 	
+	// Modes
+	
+	@IBAction func modeMirror(sender: AnyObject)
+	{
+		modeMirrorToggle()
+	}
+	
+	func modeMirrorToggle()
+	{
+		var theDrawView = drawView as DrawView
+		
+		var modes = ["M*","Mx","My","Mr"]
+		var modesIndex = find(modes, theDrawView.modeMirror)!
+		var modeTarget = modesIndex+1
+		if modeTarget > modes.count-1{ modeTarget = 0	}
+		theDrawView.modeMirror = modes[modeTarget]
+		modeMirror.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
+	}
+	
+	
 	@IBAction func modeColor(sender: AnyObject)
 	{
 		var theDrawView = drawView as DrawView
@@ -154,11 +174,6 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		theDrawView.modeGeometric = "1"
-	}
-	@IBAction func modeMirrorX(sender: AnyObject)
-	{
-		var theDrawView = drawView as DrawView
-		theDrawView.modeMirrorX = "1"
 	}
 	
 	@IBAction func modeThick(sender: AnyObject)

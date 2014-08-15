@@ -13,8 +13,7 @@ class DrawView: UIView {
 	var lines:[Line] = []
 	var lastPoint: CGPoint!
 	var drawColor = UIColor.blackColor()
-	var modeMirrorX = "0"
-	var modeMirrorY = "0"
+	var modeMirror = "M*"
 	var modeGeometric = "0"
 	var modeThick = "0"
 	var modeRounded = "0"
@@ -30,10 +29,10 @@ class DrawView: UIView {
 	override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!)
 	{
 		var newPoint = touches.anyObject().locationInView(self)
-		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor, modeMirrorX: modeMirrorX, modeGeometric: modeGeometric, modeMirrorY: modeMirrorY, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
+		lines.append(Line(start: lastPoint, end: newPoint, color: drawColor, modeMirror: modeMirror, modeGeometric: modeGeometric, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
 		lastPoint = newPoint
 		
-		if lines.count > 2000
+		if lines.count > 1500
 		{
 			lines = lines.reverse()
 			lines.removeLast()
@@ -87,7 +86,7 @@ class DrawView: UIView {
 			CGContextSetStrokeColorWithColor(context, line.color.CGColor)
 			CGContextStrokePath(context)
 			
-			if line.modeMirrorX == "1"
+			if line.modeMirror == "1"
 			{
 				var mirrorStart = self.frame.size.width/2 - ( startX - self.frame.size.width/2 )
 				var mirrorEnd = self.frame.size.width/2 - ( endX - self.frame.size.width/2 )
