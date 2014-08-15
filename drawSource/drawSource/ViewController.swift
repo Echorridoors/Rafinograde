@@ -32,6 +32,9 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		templateStart()
+	
+		modeMirrorToggle()
+		modeThickToggle()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -147,7 +150,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["M*","Mx","My","Mr"]
+		var modes = ["M","Mx","My","Mr"]
 		var modesIndex = find(modes, theDrawView.modeMirror)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -178,8 +181,19 @@ class ViewController: UIViewController {
 	
 	@IBAction func modeThick(sender: AnyObject)
 	{
+		modeThickToggle()
+	}
+	
+	func modeThickToggle()
+	{
 		var theDrawView = drawView as DrawView
-		theDrawView.modeThick = "1"
+		
+		var modes = ["T1","T2","T3","T4"]
+		var modesIndex = find(modes, theDrawView.modeThick)!
+		var modeTarget = modesIndex+1
+		if modeTarget > modes.count-1{ modeTarget = 0	}
+		theDrawView.modeThick = modes[modeTarget]
+		modeThick.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 	}
 	
 	@IBAction func modeRounded(sender: AnyObject)
