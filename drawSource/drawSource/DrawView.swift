@@ -49,6 +49,7 @@ class DrawView: UIView {
 			var endX = line.end.x
 			var endY = line.end.y
 			
+			
 			if line.modeThick == "1" { CGContextSetLineWidth(context, 18) }
 			if line.modeRounded == "1" { CGContextSetLineCap(context, kCGLineCapRound) }
 			
@@ -60,11 +61,11 @@ class DrawView: UIView {
 				endY = CGFloat(Int(line.end.y/20)*20)
 			}
 			
+			
 			if startX == endX && startY == endY
 			{
 				continue
 			}
-			
 			
 			CGContextMoveToPoint(context, startX,startY)
 			CGContextAddLineToPoint(context, endX, endY)

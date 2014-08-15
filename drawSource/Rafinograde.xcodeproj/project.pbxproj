@@ -303,6 +303,7 @@
 				033C9402199CF5380054AD08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
