@@ -51,7 +51,7 @@ class DrawView: UIView {
 		else
 		{
 			return UIColor.blackColor()
-		}		
+		}
 	}
 	
 	func valueRound( value:CGFloat, grid:CGFloat) -> CGFloat
@@ -89,10 +89,10 @@ class DrawView: UIView {
 			var endX = line.end.x
 			var endY = line.end.y			
 			
+			
 			// Colour Modes
 			if line.color == UIColor.purpleColor()
 			{
-				lineId += 1
 				let array = [
 					UIColorFromRGB(0xffa726),
 					UIColorFromRGB(0xef1180),
@@ -112,14 +112,13 @@ class DrawView: UIView {
 			if line.modeThick == "T3" { CGContextSetLineWidth(context, gridUnit/2-2) }
 			if line.modeThick == "T4" { CGContextSetLineWidth(context, gridUnit-2) }
 			
-			if line.modeRounded == "1" { CGContextSetLineCap(context, kCGLineCapRound) }
-			
 			if line.modeGeometric == "Gs"
 			{
 				startX = valueRound(line.start.x+(gridUnit/2), grid: gridUnit)
 				startY = valueRound(line.start.y+(gridUnit/2), grid: gridUnit)
 				endX = valueRound(line.end.x+(gridUnit/2), grid: gridUnit)
 				endY = valueRound(line.end.y+(gridUnit/2), grid: gridUnit)
+				CGContextSetLineCap(context, kCGLineCapSquare)
 			}
 			if line.modeGeometric == "Gp"
 			{
@@ -173,6 +172,7 @@ class DrawView: UIView {
 				CGContextSetStrokeColorWithColor(context, color)
 				CGContextStrokePath(context)
 			}
+			lineId += 1
 			
 		}
 	}
