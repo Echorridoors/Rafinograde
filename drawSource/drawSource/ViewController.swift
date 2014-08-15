@@ -35,6 +35,7 @@ class ViewController: UIViewController {
 	
 		modeMirrorToggle()
 		modeThickToggle()
+		modeGeometricToggle()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -117,8 +118,8 @@ class ViewController: UIViewController {
 			var y:CGFloat = 1
 			while y < 30
 			{
-				var posX:CGFloat =  CGFloat( Int( tileSize+(tileSize/3*x) ) )
-				var posY:CGFloat =  CGFloat( Int( tileSize+(tileSize/3*y) ) )
+				var posX:CGFloat =  CGFloat( Int( tileSize+(tileSize/2*x) ) )
+				var posY:CGFloat =  CGFloat( Int( tileSize+(tileSize/2*y) ) )
 				
 				var lineView = UIView(frame: CGRectMake( posX, posY, 1, 1))
 				lineView.backgroundColor = UIColor.whiteColor()
@@ -173,11 +174,32 @@ class ViewController: UIViewController {
 		
 		NSLog("> MODE | %@", theDrawView.drawColor)
 	}
+	
+	func modeColorToggle()
+	{
+		
+	}
+	
+	// Geometric
+	
 	@IBAction func modeGeometric(sender: AnyObject)
 	{
-		var theDrawView = drawView as DrawView
-		theDrawView.modeGeometric = "1"
+		modeGeometricToggle()
 	}
+	
+	func modeGeometricToggle()
+	{
+		var theDrawView = drawView as DrawView
+		
+		var modes = ["Gr","Gp","Gs"]
+		var modesIndex = find(modes, theDrawView.modeGeometric)!
+		var modeTarget = modesIndex+1
+		if modeTarget > modes.count-1{ modeTarget = 0	}
+		theDrawView.modeGeometric = modes[modeTarget]
+		modeGeometric.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
+	}
+	
+	// Thickness
 	
 	@IBAction func modeThick(sender: AnyObject)
 	{

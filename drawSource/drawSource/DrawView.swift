@@ -14,7 +14,7 @@ class DrawView: UIView {
 	var lastPoint: CGPoint!
 	var drawColor = UIColor.blackColor()
 	var modeMirror = "Mr"
-	var modeGeometric = "0"
+	var modeGeometric = "Gs"
 	var modeThick = "T4"
 	var modeRounded = "0"
 	var modeGridLarge = "0"
@@ -57,12 +57,30 @@ class DrawView: UIView {
 		
 		var gridUnit:CGFloat = self.setUnit/2
 		
+		
+		var lineId = 0
+		
 		for line in lines
 		{
+			
+			var color = line.color.CGColor
 			var startX = line.start.x
 			var startY = line.start.y
 			var endX = line.end.x
 			var endY = line.end.y
+			
+			
+			// Test
+			lineId += 1
+			let array = [UIColor.orangeColor(), UIColor.purpleColor(), UIColor.blueColor(), UIColor.yellowColor()]
+//			let randomIndex = Int(arc4random_uniform(UInt32(array.count)))
+			let randomIndex = (lineId+lines.count)/6 % array.count
+			color = array[randomIndex].CGColor
+			
+			
+			
+			
+			
 			
 			if line.modeThick == "T1" { CGContextSetLineWidth(context, 1) }
 			if line.modeThick == "T2" { CGContextSetLineWidth(context, gridUnit/3-2) }
@@ -71,12 +89,19 @@ class DrawView: UIView {
 			
 			if line.modeRounded == "1" { CGContextSetLineCap(context, kCGLineCapRound) }
 			
-			if line.modeGeometric == "1"
+			if line.modeGeometric == "Gs"
 			{
-				startX = valueRound(line.start.x, grid: gridUnit)
-				startY = valueRound(line.start.y, grid: gridUnit)
-				endX = valueRound(line.end.x, grid: gridUnit)
-				endY = valueRound(line.end.y, grid: gridUnit)
+				startX = valueRound(line.start.x+(gridUnit/2), grid: gridUnit)
+				startY = valueRound(line.start.y+(gridUnit/2), grid: gridUnit)
+				endX = valueRound(line.end.x+(gridUnit/2), grid: gridUnit)
+				endY = valueRound(line.end.y+(gridUnit/2), grid: gridUnit)
+			}
+			if line.modeGeometric == "Gp"
+			{
+				startX = valueRound(line.start.x+(gridUnit/2), grid: gridUnit/2)
+				startY = valueRound(line.start.y+(gridUnit/2), grid: gridUnit/2)
+				endX = valueRound(line.end.x+(gridUnit/2), grid: gridUnit/2)
+				endY = valueRound(line.end.y+(gridUnit/2), grid: gridUnit/2)
 			}
 			
 			if startX == endX && startY == endY
@@ -86,7 +111,7 @@ class DrawView: UIView {
 			
 			CGContextMoveToPoint(context, startX,startY)
 			CGContextAddLineToPoint(context, endX, endY)
-			CGContextSetStrokeColorWithColor(context, line.color.CGColor)
+			CGContextSetStrokeColorWithColor(context, color)
 			CGContextStrokePath(context)
 			
 			if line.modeMirror == "Mx"
@@ -96,7 +121,7 @@ class DrawView: UIView {
 				
 				CGContextMoveToPoint(context, mirrorStart, startY)
 				CGContextAddLineToPoint(context, mirrorEnd, endY)
-				CGContextSetStrokeColorWithColor(context, line.color.CGColor)
+				CGContextSetStrokeColorWithColor(context, color)
 				CGContextStrokePath(context)
 			}
 			
@@ -107,7 +132,7 @@ class DrawView: UIView {
 				
 				CGContextMoveToPoint(context, startX, mirrorStart)
 				CGContextAddLineToPoint(context, endX, mirrorEnd)
-				CGContextSetStrokeColorWithColor(context, line.color.CGColor)
+				CGContextSetStrokeColorWithColor(context, color)
 				CGContextStrokePath(context)
 			}
 			
@@ -120,7 +145,7 @@ class DrawView: UIView {
 				
 				CGContextMoveToPoint(context, mirrorStart2, mirrorStart)
 				CGContextAddLineToPoint(context, mirrorEnd2, mirrorEnd)
-				CGContextSetStrokeColorWithColor(context, line.color.CGColor)
+				CGContextSetStrokeColorWithColor(context, color)
 				CGContextStrokePath(context)
 			}
 			
