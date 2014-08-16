@@ -46,7 +46,6 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="colorTapped:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="L83-l7-MnG"/>
                                             <action selector="optionUndo:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gUZ-aP-SKK"/>
                                         </connections>
                                     </button>
@@ -114,7 +113,19 @@
                                         </state>
                                         <connections>
                                             <action selector="modeRounded:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="oaJ-Hr-BBT"/>
-                                            <action selector="modeThick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="llU-Xk-vyq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Vbn-9h-DJe" userLabel="modeContinuous">
+                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
+                                        <state key="normal" title="rounded">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="modeContinuous:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tBg-2R-3P0"/>
+                                            <action selector="modeRounded:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="QC9-iT-ota"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -133,6 +144,7 @@
                         <outlet property="interfaceModes" destination="wbC-O5-7r2" id="KXE-jy-Jr0"/>
                         <outlet property="interfaceOptions" destination="Zc9-Ix-Y4t" id="zMy-6f-P29"/>
                         <outlet property="modeColor" destination="3TP-DG-Lsw" id="4HR-m4-D9Z"/>
+                        <outlet property="modeContinuous" destination="Vbn-9h-DJe" id="2EF-H3-NOb"/>
                         <outlet property="modeGeometric" destination="mdK-ZK-Rmn" id="8Gv-pM-a0F"/>
                         <outlet property="modeMirror" destination="KBx-dB-VK6" id="rRk-BY-Q4U"/>
                         <outlet property="modeRounded" destination="fHb-zi-eia" id="MEZ-pS-c1V"/>

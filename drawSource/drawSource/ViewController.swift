@@ -21,6 +21,7 @@ class ViewController: UIViewController {
 	@IBOutlet var modeThick: UIButton!
 	@IBOutlet var modeRounded: UIButton!
 	@IBOutlet var modeColor: UIButton!
+	@IBOutlet var modeContinuous: UIButton!
 	
 	@IBOutlet var interfaceOptions: UIView!
 	@IBOutlet var interfaceModes: UIView!
@@ -37,6 +38,7 @@ class ViewController: UIViewController {
 		modeThickToggle()
 		modeGeometricToggle()
 		modeColorToggle()
+		modeRoundedToggle()
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -171,7 +173,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["Cr","Ch"]
+		var modes = ["Cr","Cw","Ch"]
 		var modesIndex = find(modes, theDrawView.modeColor)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -191,7 +193,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["Gr","Gp","Gs"]
+		var modes = ["Gr","Gs"]
 		var modesIndex = find(modes, theDrawView.modeGeometric)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -210,7 +212,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["T1","T2","T3","T4"]
+		var modes = ["T1","Ta","T2","T3","T4"]
 		var modesIndex = find(modes, theDrawView.modeThick)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -220,18 +222,43 @@ class ViewController: UIViewController {
 	
 	@IBAction func modeRounded(sender: AnyObject)
 	{
-		var theDrawView = drawView as DrawView
-		theDrawView.modeRounded = "1"
+		modeRoundedToggle()
 	}
+	
+	func modeRoundedToggle()
+	{
+		var theDrawView = drawView as DrawView
+		
+		var modes = ["Rr","Rs"]
+		var modesIndex = find(modes, theDrawView.modeRounded)!
+		var modeTarget = modesIndex+1
+		if modeTarget > modes.count-1{ modeTarget = 0	}
+		theDrawView.modeRounded = modes[modeTarget]
+		modeRounded.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
+	}
+	
+	
+	@IBAction func modeContinuous(sender: AnyObject) {
+		
+	}
+	
 	
 	@IBAction func optionUndo(sender: AnyObject)
 	{
+		
 		var theDrawView = drawView as DrawView
-		theDrawView.lines.removeLast()
+		if theDrawView.lines.count > 10
+		{
+			var i = 0
+			while(i < 10){
+				theDrawView.lines.removeLast()
+				i += 1
+			}
+			
+		}
+		
 		theDrawView.setNeedsDisplay()
 	}
-	
-	
 	
 	// MARK: - Misc
 	

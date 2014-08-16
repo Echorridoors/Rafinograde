@@ -16,7 +16,7 @@ class DrawView: UIView {
 	var modeMirror = "Mr"
 	var modeGeometric = "Gs"
 	var modeThick = "T4"
-	var modeRounded = "0"
+	var modeRounded = "Rs"
 	var modeGridLarge = "0"
 	
 	var setUnit: CGFloat!
@@ -24,15 +24,47 @@ class DrawView: UIView {
 	override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
 	{
 		lastPoint = touches.anyObject().locationInView(self)
+		var newPoint = touches.anyObject().locationInView(self)
+		
+		if modeGeometric == "Gs"
+		{
+			newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
+			newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
+		}
+		lastPoint = newPoint
 	}
+	
+	override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!)
+	{
+	
+	}
+	
 	
 	override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!)
 	{
 		var newPoint = touches.anyObject().locationInView(self)
+		addStroke(newPoint)
+	}
+	
+	func addStroke(point:CGPoint)
+	{
+		
+		var newPoint = point
+		if modeGeometric == "Gs"
+		{
+			newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
+			newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
+		}
+		
+		if newPoint.x == lastPoint.x && newPoint.y == lastPoint.y
+		{
+			return
+		}
+		
 		lines.append(Line(start: lastPoint, end: newPoint, color: modeColorPaint(), modeMirror: modeMirror, modeGeometric: modeGeometric, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
 		lastPoint = newPoint
 		
-		if lines.count > 2500
+		if lines.count > 1000
 		{
 			lines = lines.reverse()
 			lines.removeLast()
@@ -47,6 +79,10 @@ class DrawView: UIView {
 		if self.modeColor == "Ch"
 		{
 			return UIColor.purpleColor()
+		}
+		else if self.modeColor == "Cw"
+		{
+			return UIColor.whiteColor()
 		}
 		else
 		{
@@ -73,37 +109,42 @@ class DrawView: UIView {
 		
 		var context = UIGraphicsGetCurrentContext()
 		CGContextBeginPath(context)
-		CGContextSetLineCap(context, kCGLineCapRound)
+		
 		CGContextSetLineWidth(context, 1)
 		
 		var gridUnit:CGFloat = self.setUnit/2
 		
 		var lineId = 0
 		
+		let hohokumColours = [
+			UIColorFromRGB(0xffa726),
+			UIColorFromRGB(0xef1180),
+			UIColorFromRGB(0xb02389),
+			UIColorFromRGB(0xe65a4d),
+			UIColorFromRGB(0xffef04),
+			UIColorFromRGB(0x20c6e0),
+			UIColorFromRGB(0x3580c4)
+		]
+		let xxiivvColours = [
+			UIColorFromRGB(0x72dec2),
+			UIColorFromRGB(0xde7272),
+			UIColorFromRGB(0x222222),
+			UIColorFromRGB(0xffffff)
+		]
+		
 		for line in lines
 		{
-			
 			var color = line.color.CGColor
 			var startX = line.start.x
 			var startY = line.start.y
 			var endX = line.end.x
 			var endY = line.end.y			
-			
-			
+	
 			// Colour Modes
 			if line.color == UIColor.purpleColor()
 			{
-				let array = [
-					UIColorFromRGB(0xffa726),
-					UIColorFromRGB(0xef1180),
-					UIColorFromRGB(0xb02389),
-					UIColorFromRGB(0xe65a4d),
-					UIColorFromRGB(0xffef04),
-					UIColorFromRGB(0x20c6e0),
-					UIColorFromRGB(0x3580c4)
-				]
-				let colorIndex = (lineId+lines.count)/20 % array.count
-				color = array[colorIndex].CGColor
+				let colorIndex = (lineId+lines.count)/20 % xxiivvColours.count
+				color = xxiivvColours[colorIndex].CGColor
 			}
 			
 			// Thickness Modes
@@ -112,21 +153,23 @@ class DrawView: UIView {
 			if line.modeThick == "T3" { CGContextSetLineWidth(context, gridUnit/2-2) }
 			if line.modeThick == "T4" { CGContextSetLineWidth(context, gridUnit-2) }
 			
-			if line.modeGeometric == "Gs"
-			{
-				startX = valueRound(line.start.x+(gridUnit/2), grid: gridUnit)
-				startY = valueRound(line.start.y+(gridUnit/2), grid: gridUnit)
-				endX = valueRound(line.end.x+(gridUnit/2), grid: gridUnit)
-				endY = valueRound(line.end.y+(gridUnit/2), grid: gridUnit)
-				CGContextSetLineCap(context, kCGLineCapSquare)
+			if line.modeThick == "Ta" {
+				var lineWidth = (lineId+lines.count)/20 % 10
+				
+				if lineWidth > 5
+				{
+					lineWidth = 10 - lineWidth
+				}
+				
+				CGContextSetLineWidth(context, CGFloat(lineWidth))
 			}
-			if line.modeGeometric == "Gp"
-			{
-				startX = valueRound(line.start.x+(gridUnit/2), grid: gridUnit/2)
-				startY = valueRound(line.start.y+(gridUnit/2), grid: gridUnit/2)
-				endX = valueRound(line.end.x+(gridUnit/2), grid: gridUnit/2)
-				endY = valueRound(line.end.y+(gridUnit/2), grid: gridUnit/2)
-			}
+			
+			
+			
+
+			if line.modeRounded == "Rr" { CGContextSetLineCap(context, kCGLineCapRound) }
+			if line.modeRounded == "Rs" { CGContextSetLineCap(context, kCGLineCapSquare) }
+			
 			
 			if startX == endX && startY == endY
 			{
