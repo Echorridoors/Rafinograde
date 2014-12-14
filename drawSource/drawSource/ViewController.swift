@@ -26,6 +26,9 @@ class ViewController: UIViewController {
 	@IBOutlet var interfaceOptions: UIView!
 	@IBOutlet var interfaceModes: UIView!
 	
+	@IBOutlet var renderView: UIImageView!
+	
+	
 	var tileSize:CGFloat!
 	var screenWidth:CGFloat!
 	var screenHeight:CGFloat!
@@ -54,6 +57,8 @@ class ViewController: UIViewController {
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.setUnit = tileSize
+		
+		renderView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		
 		// Interfaces
 		interfaceOptions.frame = CGRectMake(tileSize, 0, screenWidth-(2*tileSize), tileSize)
@@ -258,6 +263,11 @@ class ViewController: UIViewController {
 		}
 		
 		theDrawView.setNeedsDisplay()
+	}
+	
+	func test()
+	{
+	
 	}
 	
 	// MARK: - Misc

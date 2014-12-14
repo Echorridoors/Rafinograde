@@ -39,14 +39,21 @@ class DrawView: UIView {
 	override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
 	{
 		NSLog("FLAT")
-		
 		//Create the UIImage
 		UIGraphicsBeginImageContext(self.frame.size)
 		self.layer.renderInContext(UIGraphicsGetCurrentContext())
-		let image = UIGraphicsGetImageFromCurrentImageContext()
+		let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		renderDrawing(image)
 		
+		for view in self.subviews {
+			if( view.tag == 200){
+				var imageView:UIImageView = view as UIImageView
+				imageView.image = image
+			}
+		}
+		
+		lines = []
+		NSLog("%d",lines.count)
 	}
 	
 	override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
@@ -117,7 +124,6 @@ class DrawView: UIView {
 	
 	override func drawRect(rect: CGRect)
 	{
-		
 		var context = UIGraphicsGetCurrentContext()
 		CGContextBeginPath(context)
 		
