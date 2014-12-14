@@ -21,10 +21,12 @@ class DrawView: UIView {
 	
 	var setUnit: CGFloat!
 	
-	override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
+	override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
 	{
-		lastPoint = touches.anyObject().locationInView(self)
-		var newPoint = touches.anyObject().locationInView(self)
+		let touchesFix = touches.anyObject() as UITouch
+		
+		lastPoint = touchesFix.locationInView(self)
+		var newPoint = touchesFix.locationInView(self)
 		
 		if modeGeometric == "Gs"
 		{
@@ -34,15 +36,24 @@ class DrawView: UIView {
 		lastPoint = newPoint
 	}
 	
-	override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!)
+	override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
 	{
-	
+		NSLog("FLAT")
+		
+		//Create the UIImage
+		UIGraphicsBeginImageContext(self.frame.size)
+		self.layer.renderInContext(UIGraphicsGetCurrentContext())
+		let image = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		renderDrawing(image)
+		
 	}
 	
-	
-	override func touchesMoved(touches: NSSet!, withEvent event: UIEvent!)
+	override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
 	{
-		var newPoint = touches.anyObject().locationInView(self)
+		let touchesFix = touches.anyObject() as UITouch
+		
+		var newPoint = touchesFix.locationInView(self)
 		addStroke(newPoint)
 	}
 	
@@ -164,12 +175,8 @@ class DrawView: UIView {
 				CGContextSetLineWidth(context, CGFloat(lineWidth))
 			}
 			
-			
-			
-
 			if line.modeRounded == "Rr" { CGContextSetLineCap(context, kCGLineCapRound) }
 			if line.modeRounded == "Rs" { CGContextSetLineCap(context, kCGLineCapSquare) }
-			
 			
 			if startX == endX && startY == endY
 			{
