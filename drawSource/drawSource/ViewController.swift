@@ -14,7 +14,6 @@ class ViewController: UIViewController {
 	@IBOutlet var drawView: DrawView!
 	
 	@IBOutlet var optionClear: UIButton!
-	@IBOutlet var optionUndo: UIButton!
 	
 	@IBOutlet var modeGeometric: UIButton!
 	@IBOutlet var modeMirror: UIButton!
@@ -23,11 +22,10 @@ class ViewController: UIViewController {
 	@IBOutlet var modeColor: UIButton!
 	@IBOutlet var modeContinuous: UIButton!
 	
-	@IBOutlet var interfaceOptions: UIView!
 	@IBOutlet var interfaceModes: UIView!
 	
 	@IBOutlet var renderView: UIImageView!
-	
+	@IBOutlet var outputView: UIView!
 	
 	var tileSize:CGFloat!
 	var screenWidth:CGFloat!
@@ -54,25 +52,23 @@ class ViewController: UIViewController {
 		screenWidth = self.view.frame.size.width
 		screenHeight = self.view.frame.size.height
 		
-		
 		var theDrawView = drawView as DrawView
 		theDrawView.setUnit = tileSize
 		
+		theDrawView.setRenderView(renderView,targetOutputView: outputView)
+		
 		renderView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
+		outputView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
+		theDrawView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		
 		// Interfaces
-		interfaceOptions.frame = CGRectMake(tileSize, 0, screenWidth-(2*tileSize), tileSize)
-		interfaceModes.frame = CGRectMake(tileSize, screenHeight-tileSize, screenWidth-(2*tileSize), tileSize)
+		interfaceModes.frame = CGRectMake(0, screenHeight-tileSize, screenWidth, tileSize)
 		
 		// Options
 		
-		optionClear.frame = CGRectMake(tileSize*5, 0, tileSize, tileSize)
-		optionClear.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
+		optionClear.frame = CGRectMake(screenWidth-(tileSize), 0, tileSize, tileSize)
+		optionClear.backgroundColor = UIColor.redColor()
 		optionClear.setTitle("Nu", forState: UIControlState.Normal)
-		
-		optionUndo.frame = CGRectMake(0, 0, tileSize, tileSize)
-		optionUndo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		optionUndo.setTitle("Un", forState: UIControlState.Normal)
 		
 		// Modes
 		modeMirror.frame = CGRectMake(0, 0, tileSize, tileSize)
@@ -145,6 +141,7 @@ class ViewController: UIViewController {
 		NSLog("> OPTI | Clear")
 		var theDrawView = drawView as DrawView
 		theDrawView.lines = []
+		renderView.image = UIImage(named: "")
 		theDrawView.setNeedsDisplay()
 	}
 	
@@ -242,27 +239,8 @@ class ViewController: UIViewController {
 		modeRounded.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 	}
 	
-	
 	@IBAction func modeContinuous(sender: AnyObject) {
 		
-	}
-	
-	
-	@IBAction func optionUndo(sender: AnyObject)
-	{
-		
-		var theDrawView = drawView as DrawView
-		if theDrawView.lines.count > 10
-		{
-			var i = 0
-			while(i < 10){
-				theDrawView.lines.removeLast()
-				i += 1
-			}
-			
-		}
-		
-		theDrawView.setNeedsDisplay()
 	}
 	
 	func test()

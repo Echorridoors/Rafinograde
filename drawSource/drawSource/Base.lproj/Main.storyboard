@@ -16,18 +16,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <view contentMode="scaleToFill" id="nWd-u9-eur" customClass="DrawView" customModule="Rafinograde" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <view contentMode="scaleToFill" id="2Hd-dc-vR7" userLabel="outputView">
+                                <rect key="frame" x="80" y="142" width="160" height="284"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" tag="200" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YeN-hH-mfK" userLabel="renderView">
-                                        <rect key="frame" x="110" y="234" width="100" height="100"/>
+                                        <rect key="frame" x="30" y="92" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <view contentMode="scaleToFill" id="nWd-u9-eur" customClass="DrawView" customModule="Rafinograde" customModuleProvider="target">
+                                        <rect key="frame" x="-80" y="-142" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" id="Zc9-Ix-Y4t" userLabel="interfaceOptions">
+                            <view contentMode="scaleToFill" id="wbC-O5-7r2" userLabel="interfaceModes">
                                 <rect key="frame" x="80" y="142" width="160" height="284"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -43,24 +48,6 @@
                                             <action selector="optionClear:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GLe-xk-8yR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lW7-mT-G47" userLabel="optionUndo">
-                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="&lt;">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="optionUndo:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gUZ-aP-SKK"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </view>
-                            <view contentMode="scaleToFill" id="wbC-O5-7r2" userLabel="interfaceModes">
-                                <rect key="frame" x="80" y="142" width="160" height="284"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3TP-DG-Lsw" userLabel="modeColor">
                                         <rect key="frame" x="50" y="127" width="60" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -145,7 +132,6 @@
                         <outlet property="drawView" destination="nWd-u9-eur" id="wyv-Qy-jw3"/>
                         <outlet property="gridView" destination="6Hx-1a-zr1" id="HUP-HC-58D"/>
                         <outlet property="interfaceModes" destination="wbC-O5-7r2" id="KXE-jy-Jr0"/>
-                        <outlet property="interfaceOptions" destination="Zc9-Ix-Y4t" id="zMy-6f-P29"/>
                         <outlet property="modeColor" destination="3TP-DG-Lsw" id="4HR-m4-D9Z"/>
                         <outlet property="modeContinuous" destination="Vbn-9h-DJe" id="2EF-H3-NOb"/>
                         <outlet property="modeGeometric" destination="mdK-ZK-Rmn" id="8Gv-pM-a0F"/>
@@ -153,7 +139,7 @@
                         <outlet property="modeRounded" destination="fHb-zi-eia" id="MEZ-pS-c1V"/>
                         <outlet property="modeThick" destination="3OV-4M-R1n" id="MzR-ZY-oaT"/>
                         <outlet property="optionClear" destination="AUZ-ZF-VN7" id="jBi-hA-Su0"/>
-                        <outlet property="optionUndo" destination="lW7-mT-G47" id="ob4-gn-NDq"/>
+                        <outlet property="outputView" destination="2Hd-dc-vR7" id="phr-pS-yOf"/>
                         <outlet property="renderView" destination="YeN-hH-mfK" id="WLu-ev-cko"/>
                     </connections>
                 </viewController>

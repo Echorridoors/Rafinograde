@@ -18,6 +18,8 @@ class DrawView: UIView {
 	var modeThick = "T4"
 	var modeRounded = "Rs"
 	var modeGridLarge = "0"
+	var targetRender:UIImageView = UIImageView(frame: CGRectMake(0, 0, 0, 0))
+	var targetOutput:UIView = UIView(frame: CGRectMake(0, 0, 0, 0))
 	
 	var setUnit: CGFloat!
 	
@@ -41,20 +43,16 @@ class DrawView: UIView {
 		NSLog("FLAT")
 		//Create the UIImage
 		UIGraphicsBeginImageContext(self.frame.size)
-		self.layer.renderInContext(UIGraphicsGetCurrentContext())
+		targetOutput.layer.renderInContext(UIGraphicsGetCurrentContext())
 		let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		
-		for view in self.subviews {
-			if( view.tag == 200){
-				var imageView:UIImageView = view as UIImageView
-				imageView.image = image
-			}
-		}
+		targetRender.image = image
 		
 		lines = []
 		NSLog("%d",lines.count)
 	}
+	
 	
 	override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
 	{
@@ -122,6 +120,12 @@ class DrawView: UIView {
 		)
 	}
 	
+	func setRenderView(targetRenderView:UIImageView,targetOutputView:UIView)
+	{
+		targetRender = targetRenderView
+		targetOutput = targetOutputView
+	}
+	
 	override func drawRect(rect: CGRect)
 	{
 		var context = UIGraphicsGetCurrentContext()
@@ -160,8 +164,8 @@ class DrawView: UIView {
 			// Colour Modes
 			if line.color == UIColor.purpleColor()
 			{
-				let colorIndex = (lineId+lines.count)/20 % xxiivvColours.count
-				color = xxiivvColours[colorIndex].CGColor
+				let colorIndex = (lineId+lines.count)/20 % hohokumColours.count
+				color = hohokumColours[colorIndex].CGColor
 			}
 			
 			// Thickness Modes
