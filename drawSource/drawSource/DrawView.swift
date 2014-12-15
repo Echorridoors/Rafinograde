@@ -20,6 +20,7 @@ class DrawView: UIView {
 	var modeGridLarge = "0"
 	var targetRender:UIImageView = UIImageView(frame: CGRectMake(0, 0, 0, 0))
 	var targetOutput:UIView = UIView(frame: CGRectMake(0, 0, 0, 0))
+	var menuView:UIView = UIView(frame: CGRectMake(0, 0, 0, 0))
 	
 	var setUnit: CGFloat!
 	
@@ -52,6 +53,9 @@ class DrawView: UIView {
 		UIGraphicsEndImageContext()
 		targetRender.image = image
 		lines = []
+		self.setNeedsDisplay()
+		
+		menuView.hidden = false
 	}
 	
 	
@@ -61,6 +65,8 @@ class DrawView: UIView {
 		
 		var newPoint = touchesFix.locationInView(self)
 		addStroke(newPoint)
+		
+		menuView.hidden = true
 	}
 	
 	func addStroke(point:CGPoint)
@@ -116,6 +122,11 @@ class DrawView: UIView {
 		targetOutput = targetOutputView
 	}
 	
+	func setMenuView(targetMenuView:UIView)
+	{
+		menuView = targetMenuView
+	}
+	
 	override func drawRect(rect: CGRect)
 	{
 		var context = UIGraphicsGetCurrentContext()
@@ -146,6 +157,10 @@ class DrawView: UIView {
 			UIColorFromRGB(0x999999),
 			UIColorFromRGB(0x333333)
 		]
+		let gradientDamier = [
+			UIColorFromRGB(0x000000),
+			UIColorFromRGB(0xffffff)
+		]
 		
 		for line in lines
 		{
@@ -167,12 +182,18 @@ class DrawView: UIView {
 				let colorIndex = (lineId+lines.count)/20 % gradientGrey.count
 				colorValue = gradientGrey[colorIndex].CGColor
 			}
+			if line.color == "Gd"
+			{
+				let colorIndex = (lineId+lines.count)/4 % gradientDamier.count
+				colorValue = gradientDamier[colorIndex].CGColor
+			}
 			
 			// Thickness Modes
 			if line.modeThick == "T1" { CGContextSetLineWidth(context, round(1)) }
 			if line.modeThick == "T2" { CGContextSetLineWidth(context, round(gridUnit/3-2)) }
 			if line.modeThick == "T3" { CGContextSetLineWidth(context, round(gridUnit/2-2)) }
 			if line.modeThick == "T4" { CGContextSetLineWidth(context, round(gridUnit-2)) }
+			if line.modeThick == "T5" { CGContextSetLineWidth(context, round(gridUnit)) }
 			
 			if line.modeThick == "Ta" {
 				var lineWidth = (lineId+lines.count)/40 % 20

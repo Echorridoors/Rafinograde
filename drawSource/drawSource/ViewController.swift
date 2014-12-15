@@ -14,6 +14,7 @@ class ViewController: UIViewController {
 	@IBOutlet var drawView: DrawView!
 	
 	@IBOutlet var optionClear: UIButton!
+	@IBOutlet var optionSave: UIButton!
 	
 	@IBOutlet var modeGeometric: UIButton!
 	@IBOutlet var modeMirror: UIButton!
@@ -56,6 +57,7 @@ class ViewController: UIViewController {
 		theDrawView.setUnit = tileSize
 		
 		theDrawView.setRenderView(renderView,targetOutputView: outputView)
+		theDrawView.setMenuView(interfaceModes)
 		
 		renderView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		outputView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
@@ -69,6 +71,9 @@ class ViewController: UIViewController {
 		optionClear.frame = CGRectMake(screenWidth-(tileSize), 0, tileSize, tileSize)
 		optionClear.backgroundColor = UIColor.redColor()
 		optionClear.setTitle("Nu", forState: UIControlState.Normal)
+		
+		optionSave.frame = CGRectMake(screenWidth-(2*tileSize), 0, tileSize, tileSize)
+		optionSave.setTitle("Sa", forState: UIControlState.Normal)
 		
 		// Modes
 		modeMirror.frame = CGRectMake(0, 0, tileSize, tileSize)
@@ -91,7 +96,7 @@ class ViewController: UIViewController {
 		modeRounded.setTitle("Rn", forState: UIControlState.Normal)
 		
 		// Color
-		modeColor.frame = CGRectMake(tileSize*5, 0, tileSize, tileSize)
+		modeColor.frame = CGRectMake(tileSize*4, 0, tileSize, tileSize)
 		modeColor.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
 		modeColor.setTitle("Cb", forState: UIControlState.Normal)
 			
@@ -145,6 +150,17 @@ class ViewController: UIViewController {
 		theDrawView.setNeedsDisplay()
 	}
 	
+	@IBAction func optionSave(sender: AnyObject)
+	{
+		UIGraphicsBeginImageContext(CGSizeMake(self.view.frame.width, self.view.frame.height))
+		outputView.layer.renderInContext(UIGraphicsGetCurrentContext())
+		let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+		
+		interfaceModes.hidden = true
+	}
+
 	// Modes
 	
 	@IBAction func modeMirror(sender: AnyObject)
@@ -175,7 +191,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["Cb","Cw","Cy","Cr","Gg"]
+		var modes = ["Cb","Cw","Cy","Cr","Gg","Gd"]
 		var modesIndex = find(modes, theDrawView.modeColor)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -214,7 +230,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["T1","T2","T3","T4","Ta"]
+		var modes = ["T1","T2","T3","T4","T5","Ta"]
 		var modesIndex = find(modes, theDrawView.modeThick)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -243,12 +259,8 @@ class ViewController: UIViewController {
 		
 	}
 	
-	func test()
-	{
-	
-	}
-	
 	// MARK: - Misc
+	
 	
 	override func prefersStatusBarHidden() -> Bool {
 		return true

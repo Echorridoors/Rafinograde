@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
@@ -46,6 +47,18 @@
                                         </state>
                                         <connections>
                                             <action selector="optionClear:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GLe-xk-8yR"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="E2D-j7-YdQ" userLabel="optionSave">
+                                        <rect key="frame" x="60" y="127" width="40" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
+                                        <state key="normal" title="Sa">
+                                            <color key="titleColor" red="0.81666522789999996" green="0.81666522789999996" blue="0.81666522789999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="optionSave:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="X04-yt-dss"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3TP-DG-Lsw" userLabel="modeColor">
@@ -139,6 +152,7 @@
                         <outlet property="modeRounded" destination="fHb-zi-eia" id="MEZ-pS-c1V"/>
                         <outlet property="modeThick" destination="3OV-4M-R1n" id="MzR-ZY-oaT"/>
                         <outlet property="optionClear" destination="AUZ-ZF-VN7" id="jBi-hA-Su0"/>
+                        <outlet property="optionSave" destination="E2D-j7-YdQ" id="UGa-rN-pCA"/>
                         <outlet property="outputView" destination="2Hd-dc-vR7" id="phr-pS-yOf"/>
                         <outlet property="renderView" destination="YeN-hH-mfK" id="WLu-ev-cko"/>
                     </connections>
