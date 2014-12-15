@@ -17,6 +17,8 @@
 		03F549E31A3F3DAB003B7127 /* icon.180.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F549DF1A3F3DAB003B7127 /* icon.180.png */; };
 		03F549E41A3F3DAB003B7127 /* icon.1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F549E01A3F3DAB003B7127 /* icon.1024.png */; };
 		03F549E51A3F3DAB003B7127 /* icon.120.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F549E11A3F3DAB003B7127 /* icon.120.png */; };
+		03F549E81A3F436F003B7127 /* icon.76.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F549E61A3F436F003B7127 /* icon.76.png */; };
+		03F549E91A3F436F003B7127 /* icon.152.png in Resources */ = {isa = PBXBuildFile; fileRef = 03F549E71A3F436F003B7127 /* icon.152.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		03F549DF1A3F3DAB003B7127 /* icon.180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.180.png; sourceTree = "<group>"; };
 		03F549E01A3F3DAB003B7127 /* icon.1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.1024.png; sourceTree = "<group>"; };
 		03F549E11A3F3DAB003B7127 /* icon.120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.120.png; sourceTree = "<group>"; };
+		03F549E61A3F436F003B7127 /* icon.76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.76.png; sourceTree = "<group>"; };
+		03F549E71A3F436F003B7127 /* icon.152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.152.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 		033C93E6199CF5380054AD08 /* drawSource */ = {
 			isa = PBXGroup;
 			children = (
+				03F549E61A3F436F003B7127 /* icon.76.png */,
+				03F549E71A3F436F003B7127 /* icon.152.png */,
 				03F549DE1A3F3DAB003B7127 /* icon.80.png */,
 				03F549DF1A3F3DAB003B7127 /* icon.180.png */,
 				03F549E01A3F3DAB003B7127 /* icon.1024.png */,
@@ -160,7 +166,9 @@
 				033C93F1199CF5380054AD08 /* Images.xcassets in Resources */,
 				03F549E41A3F3DAB003B7127 /* icon.1024.png in Resources */,
 				03F549E21A3F3DAB003B7127 /* icon.80.png in Resources */,
+				03F549E81A3F436F003B7127 /* icon.76.png in Resources */,
 				03F549E31A3F3DAB003B7127 /* icon.180.png in Resources */,
+				03F549E91A3F436F003B7127 /* icon.152.png in Resources */,
 				03F549E51A3F3DAB003B7127 /* icon.120.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,7 +281,7 @@
 		033C9401199CF5380054AD08 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = drawSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -286,7 +294,7 @@
 		033C9402199CF5380054AD08 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = drawSource/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
