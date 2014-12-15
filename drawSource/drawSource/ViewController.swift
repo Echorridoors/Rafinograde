@@ -38,7 +38,7 @@ class ViewController: UIViewController {
 		modeMirrorToggle()
 		modeThickToggle()
 		modeGeometricToggle()
-		modeColorToggle()
+//		modeColorToggle()
 		modeRoundedToggle()
 	}
 
@@ -93,7 +93,7 @@ class ViewController: UIViewController {
 		// Color
 		modeColor.frame = CGRectMake(tileSize*5, 0, tileSize, tileSize)
 		modeColor.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		modeColor.setTitle("Cl", forState: UIControlState.Normal)
+		modeColor.setTitle("Cb", forState: UIControlState.Normal)
 			
 		templateGrid()
 	}
@@ -175,7 +175,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["Cr","Cw","Ch"]
+		var modes = ["Cb","Cw","Cy","Cr","Gg"]
 		var modesIndex = find(modes, theDrawView.modeColor)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -195,7 +195,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["Gr","Gs"]
+		var modes = ["Gf","Gs","Gp"]
 		var modesIndex = find(modes, theDrawView.modeGeometric)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -214,7 +214,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["T1","Ta","T2","T3","T4"]
+		var modes = ["T1","T2","T3","T4","Ta"]
 		var modesIndex = find(modes, theDrawView.modeThick)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}

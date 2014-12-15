@@ -12,14 +12,14 @@ class Line {
 
 	var start: CGPoint
 	var end: CGPoint
-	var color: UIColor
+	var color: String
 	var modeMirror: String
 	var modeGeometric: String
 	var modeThick: String
 	var modeRounded: String
 	var modeGridLarge: String
 	
-	init( start _start: CGPoint, end _end: CGPoint, color _color: UIColor, modeMirror _modeMirror: String, modeGeometric _modeGeometric: String, modeThick _modeThick: String, modeRounded _modeRounded: String, modeGridLarge _modeGridLarge: String){
+	init( start _start: CGPoint, end _end: CGPoint, color _color: String, modeMirror _modeMirror: String, modeGeometric _modeGeometric: String, modeThick _modeThick: String, modeRounded _modeRounded: String, modeGridLarge _modeGridLarge: String){
 		start = _start
 		end = _end
 		color = _color

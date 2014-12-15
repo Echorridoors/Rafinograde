@@ -12,10 +12,10 @@ class DrawView: UIView {
 	
 	var lines:[Line] = []
 	var lastPoint: CGPoint!
-	var modeColor = "Ch"
+	var modeColor = "Cb"
 	var modeMirror = "Mr"
-	var modeGeometric = "Gs"
-	var modeThick = "T4"
+	var modeGeometric = "Gp"
+	var modeThick = "Ta"
 	var modeRounded = "Rs"
 	var modeGridLarge = "0"
 	var targetRender:UIImageView = UIImageView(frame: CGRectMake(0, 0, 0, 0))
@@ -35,22 +35,23 @@ class DrawView: UIView {
 			newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
 			newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
 		}
+		if modeGeometric == "Gp"
+		{
+			newPoint.x = valueRound(newPoint.x+(setUnit/8), grid: setUnit/4)
+			newPoint.y = valueRound(newPoint.y+(setUnit/8), grid: setUnit/4)
+		}
 		lastPoint = newPoint
 	}
 	
 	override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
 	{
-		NSLog("FLAT")
 		//Create the UIImage
-		UIGraphicsBeginImageContext(self.frame.size)
+		UIGraphicsBeginImageContext(CGSizeMake(self.frame.width, self.frame.height))
 		targetOutput.layer.renderInContext(UIGraphicsGetCurrentContext())
 		let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		
 		targetRender.image = image
-		
 		lines = []
-		NSLog("%d",lines.count)
 	}
 	
 	
@@ -71,13 +72,18 @@ class DrawView: UIView {
 			newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
 			newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
 		}
+		if modeGeometric == "Gp"
+		{
+			newPoint.x = valueRound(newPoint.x+(setUnit/8), grid: setUnit/4)
+			newPoint.y = valueRound(newPoint.y+(setUnit/8), grid: setUnit/4)
+		}
 		
 		if newPoint.x == lastPoint.x && newPoint.y == lastPoint.y
 		{
 			return
 		}
 		
-		lines.append(Line(start: lastPoint, end: newPoint, color: modeColorPaint(), modeMirror: modeMirror, modeGeometric: modeGeometric, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
+		lines.append(Line(start: lastPoint, end: newPoint, color: modeColor, modeMirror: modeMirror, modeGeometric: modeGeometric, modeThick: modeThick, modeRounded: modeRounded, modeGridLarge: modeGridLarge))
 		lastPoint = newPoint
 		
 		if lines.count > 1000
@@ -88,22 +94,6 @@ class DrawView: UIView {
 		}
 		
 		self.setNeedsDisplay()
-	}
-	
-	func modeColorPaint() -> UIColor
-	{
-		if self.modeColor == "Ch"
-		{
-			return UIColor.purpleColor()
-		}
-		else if self.modeColor == "Cw"
-		{
-			return UIColor.whiteColor()
-		}
-		else
-		{
-			return UIColor.blackColor()
-		}
 	}
 	
 	func valueRound( value:CGFloat, grid:CGFloat) -> CGFloat
@@ -146,43 +136,53 @@ class DrawView: UIView {
 			UIColorFromRGB(0x20c6e0),
 			UIColorFromRGB(0x3580c4)
 		]
-		let xxiivvColours = [
-			UIColorFromRGB(0x72dec2),
-			UIColorFromRGB(0xde7272),
-			UIColorFromRGB(0x222222),
-			UIColorFromRGB(0xffffff)
+		let gradientGrey = [
+			UIColorFromRGB(0x000000),
+			UIColorFromRGB(0x333333),
+			UIColorFromRGB(0x999999),
+			UIColorFromRGB(0xcccccc),
+			UIColorFromRGB(0xeeeeee),
+			UIColorFromRGB(0xcccccc),
+			UIColorFromRGB(0x999999),
+			UIColorFromRGB(0x333333)
 		]
 		
 		for line in lines
 		{
-			var color = line.color.CGColor
+			var color = line.color
 			var startX = line.start.x
 			var startY = line.start.y
 			var endX = line.end.x
-			var endY = line.end.y			
+			var endY = line.end.y
+			
+			var colorValue:CGColor = UIColorFromRGB(0xffffff).CGColor
 	
 			// Colour Modes
-			if line.color == UIColor.purpleColor()
+			if(line.color == "Cb"){ colorValue = UIColorFromRGB(0x000000).CGColor	}
+			if(line.color == "Cw"){ colorValue = UIColorFromRGB(0xffffff).CGColor	}
+			if(line.color == "Cr"){ colorValue = UIColorFromRGB(0xff0000).CGColor	}
+			if(line.color == "Cy"){ colorValue = UIColorFromRGB(0x72dec2).CGColor	}
+			if line.color == "Gg"
 			{
-				let colorIndex = (lineId+lines.count)/20 % hohokumColours.count
-				color = hohokumColours[colorIndex].CGColor
+				let colorIndex = (lineId+lines.count)/20 % gradientGrey.count
+				colorValue = gradientGrey[colorIndex].CGColor
 			}
 			
 			// Thickness Modes
-			if line.modeThick == "T1" { CGContextSetLineWidth(context, 1) }
-			if line.modeThick == "T2" { CGContextSetLineWidth(context, gridUnit/3-2) }
-			if line.modeThick == "T3" { CGContextSetLineWidth(context, gridUnit/2-2) }
-			if line.modeThick == "T4" { CGContextSetLineWidth(context, gridUnit-2) }
+			if line.modeThick == "T1" { CGContextSetLineWidth(context, round(1)) }
+			if line.modeThick == "T2" { CGContextSetLineWidth(context, round(gridUnit/3-2)) }
+			if line.modeThick == "T3" { CGContextSetLineWidth(context, round(gridUnit/2-2)) }
+			if line.modeThick == "T4" { CGContextSetLineWidth(context, round(gridUnit-2)) }
 			
 			if line.modeThick == "Ta" {
-				var lineWidth = (lineId+lines.count)/20 % 10
+				var lineWidth = (lineId+lines.count)/40 % 20
 				
-				if lineWidth > 5
+				if lineWidth > 10
 				{
-					lineWidth = 10 - lineWidth
+					lineWidth = 20 - lineWidth
 				}
 				
-				CGContextSetLineWidth(context, CGFloat(lineWidth))
+				CGContextSetLineWidth(context, round(CGFloat(lineWidth)))
 			}
 			
 			if line.modeRounded == "Rr" { CGContextSetLineCap(context, kCGLineCapRound) }
@@ -195,7 +195,7 @@ class DrawView: UIView {
 			
 			CGContextMoveToPoint(context, startX,startY)
 			CGContextAddLineToPoint(context, endX, endY)
-			CGContextSetStrokeColorWithColor(context, color)
+			CGContextSetStrokeColorWithColor(context, colorValue)
 			CGContextStrokePath(context)
 			
 			if line.modeMirror == "Mx"
@@ -205,7 +205,7 @@ class DrawView: UIView {
 				
 				CGContextMoveToPoint(context, mirrorStart, startY)
 				CGContextAddLineToPoint(context, mirrorEnd, endY)
-				CGContextSetStrokeColorWithColor(context, color)
+				CGContextSetStrokeColorWithColor(context, colorValue)
 				CGContextStrokePath(context)
 			}
 			
@@ -216,7 +216,7 @@ class DrawView: UIView {
 				
 				CGContextMoveToPoint(context, startX, mirrorStart)
 				CGContextAddLineToPoint(context, endX, mirrorEnd)
-				CGContextSetStrokeColorWithColor(context, color)
+				CGContextSetStrokeColorWithColor(context, colorValue)
 				CGContextStrokePath(context)
 			}
 			
@@ -229,7 +229,7 @@ class DrawView: UIView {
 				
 				CGContextMoveToPoint(context, mirrorStart2, mirrorStart)
 				CGContextAddLineToPoint(context, mirrorEnd2, mirrorEnd)
-				CGContextSetStrokeColorWithColor(context, color)
+				CGContextSetStrokeColorWithColor(context, colorValue)
 				CGContextStrokePath(context)
 			}
 			lineId += 1
