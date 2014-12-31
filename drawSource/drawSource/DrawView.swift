@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Darwin
 
 class DrawView: UIView {
 	
@@ -64,9 +65,48 @@ class DrawView: UIView {
 		let touchesFix = touches.anyObject() as UITouch
 		
 		var newPoint = touchesFix.locationInView(self)
-		addStroke(newPoint)
 		
 		menuView.hidden = true
+		
+		if( modeMirror == "Cs" ){
+			
+			var i:Float = 0
+			var sides:Float = (Float(newPoint.x) / 40) + 10
+			var radius:Float = Float(newPoint.y)/2
+			var step = Float(M_PI * 2)/sides
+			
+			var offsetX:CGFloat = 160
+			var offsetY:CGFloat = 270
+			
+			while(i < sides){
+				var x = cos(i*step) * radius
+				var y = sin(i*step) * radius
+//				lastPoint = CGPointMake(CGFloat(sin((i-4)*step) * radius)+offsetX,CGFloat(cos((i-4)*step) * radius)+offsetY)
+				addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
+				i += 1
+			}
+		}
+		else if( modeMirror == "Mc" ){
+			// Abstract shape
+			var i:Float = 0
+			var sides:Float = (Float(newPoint.x) / 40) + 10
+			var radius:Float = Float(newPoint.y)/2
+			var step = Float(M_PI * 2)/sides
+			
+			var offsetX:CGFloat = 160
+			var offsetY:CGFloat = 270
+			
+			while(i < sides){
+				var x = cos(i*step) * radius
+				var y = sin(i*step) * radius
+				lastPoint = CGPointMake(CGFloat(sin((i-4)*step) * radius)+offsetX,CGFloat(cos((i-4)*step) * radius)+offsetY)
+				addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
+				i += 1
+			}
+		}
+		else{
+			addStroke(newPoint)
+		}
 	}
 	
 	func addStroke(point:CGPoint)
@@ -184,7 +224,7 @@ class DrawView: UIView {
 			}
 			if line.color == "Gd"
 			{
-				let colorIndex = (lineId+lines.count)/4 % gradientDamier.count
+				let colorIndex = (lineId+lines.count)/7 % gradientDamier.count
 				colorValue = gradientDamier[colorIndex].CGColor
 			}
 			

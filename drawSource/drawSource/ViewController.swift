@@ -172,7 +172,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["M","Mx","My","Mr"]
+		var modes = ["M","Mx","My","Mr","Cs"]
 		var modesIndex = find(modes, theDrawView.modeMirror)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
