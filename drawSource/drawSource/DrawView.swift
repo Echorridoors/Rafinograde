@@ -68,33 +68,54 @@ class DrawView: UIView {
 		
 		menuView.hidden = true
 		
-		if( modeMirror == "Cs" ){
+		if( modeMirror == "Mv" ){
+			
+			var fixedPoint = newPoint
 			
 			var i:Float = 0
-			var sides:Float = (Float(newPoint.x) / 40) + 10
-			var radius:Float = Float(newPoint.y)/2
+			var sides:Float = (Float(fixedPoint.x) / 40) + 10
+			var radius:Float = Float(fixedPoint.y)/2
 			var step = Float(M_PI * 2)/sides
 			
-			var offsetX:CGFloat = 160
-			var offsetY:CGFloat = 270
+			var offsetX:CGFloat = self.frame.width/2
+			var offsetY:CGFloat = self.frame.height/2
 			
 			while(i < sides){
 				var x = cos(i*step) * radius
 				var y = sin(i*step) * radius
-//				lastPoint = CGPointMake(CGFloat(sin((i-4)*step) * radius)+offsetX,CGFloat(cos((i-4)*step) * radius)+offsetY)
 				addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
 				i += 1
 			}
 		}
-		else if( modeMirror == "Mc" ){
+		else if( modeMirror == "Ms" ){
+			
+			var fixedPoint = newPoint
+			
+			var i:Float = 0
+			var sides:Float = (Float(fixedPoint.x) / 40) + 10
+			var radius:Float = Float(fixedPoint.y)/2
+			var step = Float(M_PI * 2)/sides
+			
+			var offsetX:CGFloat = self.frame.width/2
+			var offsetY:CGFloat = self.frame.height/2
+			
+			while(i < sides){
+				var x = cos(i*step) * radius
+				var y = sin(i*step) * radius
+				lastPoint = CGPointMake(offsetX,offsetY)
+				addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
+				i += 1
+			}
+		}
+		else if( modeMirror == "Mo" ){
 			// Abstract shape
 			var i:Float = 0
 			var sides:Float = (Float(newPoint.x) / 40) + 10
 			var radius:Float = Float(newPoint.y)/2
 			var step = Float(M_PI * 2)/sides
 			
-			var offsetX:CGFloat = 160
-			var offsetY:CGFloat = 270
+			var offsetX:CGFloat = self.frame.width/2
+			var offsetY:CGFloat = self.frame.height/2
 			
 			while(i < sides){
 				var x = cos(i*step) * radius
@@ -226,6 +247,11 @@ class DrawView: UIView {
 			{
 				let colorIndex = (lineId+lines.count)/7 % gradientDamier.count
 				colorValue = gradientDamier[colorIndex].CGColor
+			}
+			if line.color == "Gh"
+			{
+				let colorIndex = (lineId+lines.count)/7 % hohokumColours.count
+				colorValue = hohokumColours[colorIndex].CGColor
 			}
 			
 			// Thickness Modes

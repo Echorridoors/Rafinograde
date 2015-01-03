@@ -143,6 +143,13 @@ class ViewController: UIViewController {
 	
 	@IBAction func optionClear(sender: AnyObject)
 	{
+		let randomColour = Int(arc4random_uniform(5))
+		
+		let colours = [UIColorFromRGB(0x72dec2).CGColor,UIColorFromRGB(0xff0000).CGColor,UIColorFromRGB(0x222222).CGColor,UIColorFromRGB(0xffffff).CGColor,UIColorFromRGB(0xdddddd).CGColor,UIColorFromRGB(0x999999).CGColor]
+		let randomIndex = Int(arc4random_uniform(UInt32(colours.count)))
+		
+		self.outputView.backgroundColor = UIColor(CGColor: colours[randomIndex])
+		
 		NSLog("> OPTI | Clear")
 		var theDrawView = drawView as DrawView
 		theDrawView.lines = []
@@ -172,7 +179,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["M","Mx","My","Mr","Cs"]
+		var modes = ["M","Mx","My","Mr","Ms","Mo","Mv"]
 		var modesIndex = find(modes, theDrawView.modeMirror)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -191,7 +198,7 @@ class ViewController: UIViewController {
 	{
 		var theDrawView = drawView as DrawView
 		
-		var modes = ["Cb","Cw","Cy","Cr","Gg","Gd"]
+		var modes = ["Cb","Cw","Cy","Cr","Gg","Gd","Gh"]
 		var modesIndex = find(modes, theDrawView.modeColor)!
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
@@ -264,6 +271,15 @@ class ViewController: UIViewController {
 	
 	override func prefersStatusBarHidden() -> Bool {
 		return true
+	}
+	
+	func UIColorFromRGB(rgbValue: UInt) -> UIColor {
+		return UIColor(
+			red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+			green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+			blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+			alpha: CGFloat(1.0)
+		)
 	}
 
 }

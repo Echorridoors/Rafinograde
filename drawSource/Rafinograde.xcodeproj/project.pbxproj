@@ -31,7 +31,7 @@
 		033C93FC199CF5380054AD08 /* drawSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = drawSourceTests.swift; sourceTree = "<group>"; };
 		033C9410199CFA160054AD08 /* DrawView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		033C9412199CFFA30054AD08 /* Lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
-		03E0B4721A3E450D003D633E /* Rafinograde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rafinograde.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03E0B4721A3E450D003D633E /* Rafinograde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Rafinograde.app; path = "/Users/aliceffekt/Github/Rafinograde/drawSource/build/Debug-iphoneos/Rafinograde.app"; sourceTree = "<absolute>"; };
 		03F549DE1A3F3DAB003B7127 /* icon.80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.80.png; sourceTree = "<group>"; };
 		03F549DF1A3F3DAB003B7127 /* icon.180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.180.png; sourceTree = "<group>"; };
 		03F549E01A3F3DAB003B7127 /* icon.1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.1024.png; sourceTree = "<group>"; };
@@ -56,7 +56,6 @@
 			children = (
 				033C93E6199CF5380054AD08 /* drawSource */,
 				033C93F9199CF5380054AD08 /* drawSourceTests */,
-				03E0B4721A3E450D003D633E /* Rafinograde.app */,
 			);
 			sourceTree = "<group>";
 		};
