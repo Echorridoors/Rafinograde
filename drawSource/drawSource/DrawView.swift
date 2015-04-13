@@ -237,7 +237,7 @@ class DrawView: UIView {
 			if(line.color == "Cb"){ colorValue = UIColorFromRGB(0x000000).CGColor	}
 			if(line.color == "Cw"){ colorValue = UIColorFromRGB(0xffffff).CGColor	}
 			if(line.color == "Cr"){ colorValue = UIColorFromRGB(0xff0000).CGColor	}
-			if(line.color == "Cy"){ colorValue = UIColorFromRGB(0x72dec2).CGColor	}
+			if(line.color == "Cy"){ colorValue = UIColorFromRGB	}
 			if line.color == "Gg"
 			{
 				let colorIndex = (lineId+lines.count)/20 % gradientGrey.count
