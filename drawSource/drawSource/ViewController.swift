@@ -35,17 +35,44 @@ class ViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		templateStart()
+		loadMenu()
+		loadSettings()
+	}
 	
-		modeMirrorToggle()
-		modeThickToggle()
-		modeGeometricToggle()
-//		modeColorToggle()
-		modeRoundedToggle()
-	}
+	// MARK: Settings -
+	
+	func loadSettings()
+	{
 
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
 	}
+	
+	// MARK: Menu -
+	
+	func loadMenu()
+	{
+		let menus = [
+			"mirror":["none","x","y","rotated"],
+			"shape":["freehand","squared","squared-half"],
+			"thickness":["1","2","3","4","5","oscillating"],
+			"rounding":["round","squared"],
+			"colour":["black","red","cyan","white","gradiant-black","chessboard"]
+		]
+		
+		println(menus)
+		
+		
+		let button   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+		button.frame = CGRectMake(0, 0, tileSize, tileSize)
+		button.backgroundColor = UIColor.greenColor()
+		button.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
+		
+		self.view.addSubview(button)
+		
+		
+		self.interfaceModes.backgroundColor = UIColor.redColor()
+	}
+	
+	// MARK: Templates -
 	
 	func templateStart()
 	{
@@ -268,7 +295,6 @@ class ViewController: UIViewController {
 	
 	// MARK: - Misc
 	
-	
 	override func prefersStatusBarHidden() -> Bool {
 		return true
 	}
@@ -280,6 +306,10 @@ class ViewController: UIViewController {
 			blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
 			alpha: CGFloat(1.0)
 		)
+	}
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
 	}
 
 }
