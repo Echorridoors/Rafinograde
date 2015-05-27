@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -33,109 +33,6 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.9169921875" green="0.9169921875" blue="0.9169921875" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view contentMode="scaleToFill" id="wbC-O5-7r2" userLabel="interfaceModes">
-                                <rect key="frame" x="80" y="142" width="160" height="284"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AUZ-ZF-VN7" userLabel="optionClear">
-                                        <rect key="frame" x="60" y="127" width="40" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="X">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="optionClear:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GLe-xk-8yR"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="E2D-j7-YdQ" userLabel="optionSave">
-                                        <rect key="frame" x="60" y="127" width="40" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="Sa">
-                                            <color key="titleColor" red="0.81666522789999996" green="0.81666522789999996" blue="0.81666522789999996" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="optionSave:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="X04-yt-dss"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3TP-DG-Lsw" userLabel="modeColor">
-                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="black">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="modeColor:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="SIC-M3-ScT"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mdK-ZK-Rmn" userLabel="modeGeometric">
-                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="geometk">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="modeGeometric:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="gdn-bX-3ia"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KBx-dB-VK6" userLabel="modeMirror">
-                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="mirrorX">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="modeMirror:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="LAY-l4-xLU"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3OV-4M-R1n" userLabel="modeThick">
-                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="fat">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="modeThick:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="VH8-I1-U1R"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fHb-zi-eia" userLabel="modeRounded">
-                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="rounded">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="modeRounded:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="oaJ-Hr-BBT"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Vbn-9h-DJe" userLabel="modeContinuous">
-                                        <rect key="frame" x="50" y="127" width="60" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="12"/>
-                                        <state key="normal" title="rounded">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="modeContinuous:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="tBg-2R-3P0"/>
-                                            <action selector="modeRounded:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="QC9-iT-ota"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90472146739130432" green="0.90472146739130432" blue="0.90472146739130432" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -144,15 +41,6 @@
                     <connections>
                         <outlet property="drawView" destination="nWd-u9-eur" id="wyv-Qy-jw3"/>
                         <outlet property="gridView" destination="6Hx-1a-zr1" id="HUP-HC-58D"/>
-                        <outlet property="interfaceModes" destination="wbC-O5-7r2" id="KXE-jy-Jr0"/>
-                        <outlet property="modeColor" destination="3TP-DG-Lsw" id="4HR-m4-D9Z"/>
-                        <outlet property="modeContinuous" destination="Vbn-9h-DJe" id="2EF-H3-NOb"/>
-                        <outlet property="modeGeometric" destination="mdK-ZK-Rmn" id="8Gv-pM-a0F"/>
-                        <outlet property="modeMirror" destination="KBx-dB-VK6" id="rRk-BY-Q4U"/>
-                        <outlet property="modeRounded" destination="fHb-zi-eia" id="MEZ-pS-c1V"/>
-                        <outlet property="modeThick" destination="3OV-4M-R1n" id="MzR-ZY-oaT"/>
-                        <outlet property="optionClear" destination="AUZ-ZF-VN7" id="jBi-hA-Su0"/>
-                        <outlet property="optionSave" destination="E2D-j7-YdQ" id="UGa-rN-pCA"/>
                         <outlet property="outputView" destination="2Hd-dc-vR7" id="phr-pS-yOf"/>
                         <outlet property="renderView" destination="YeN-hH-mfK" id="WLu-ev-cko"/>
                     </connections>

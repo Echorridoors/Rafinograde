@@ -13,18 +13,6 @@ class ViewController: UIViewController {
 	@IBOutlet var gridView: UIView!
 	@IBOutlet var drawView: DrawView!
 	
-	@IBOutlet var optionClear: UIButton!
-	@IBOutlet var optionSave: UIButton!
-	
-	@IBOutlet var modeGeometric: UIButton!
-	@IBOutlet var modeMirror: UIButton!
-	@IBOutlet var modeThick: UIButton!
-	@IBOutlet var modeRounded: UIButton!
-	@IBOutlet var modeColor: UIButton!
-	@IBOutlet var modeContinuous: UIButton!
-	
-	@IBOutlet var interfaceModes: UIView!
-	
 	@IBOutlet var renderView: UIImageView!
 	@IBOutlet var outputView: UIView!
 	
@@ -55,21 +43,46 @@ class ViewController: UIViewController {
 			"shape":["freehand","squared","squared-half"],
 			"thickness":["1","2","3","4","5","oscillating"],
 			"rounding":["round","squared"],
-			"colour":["black","red","cyan","white","gradiant-black","chessboard"]
+			"colour":["black","red","cyan","white","gradiant-black","chessboard"],
+			"options":["save","clear","hide"]
 		]
 		
-		println(menus)
+		var col:CGFloat = 0
 		
-		
-		let button   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-		button.frame = CGRectMake(0, 0, tileSize, tileSize)
-		button.backgroundColor = UIColor.greenColor()
-		button.addTarget(self, action: "buttonAction:", forControlEvents: UIControlEvents.TouchUpInside)
-		
-		self.view.addSubview(button)
-		
-		
-		self.interfaceModes.backgroundColor = UIColor.redColor()
+		for categories in menus {
+			
+			// Draw Menus
+			println("  : \(categories.0)")
+			
+			let menuHeight:CGFloat = CGFloat(categories.1.count) * tileSize
+			let menuView = UIView(frame: CGRectMake(tileSize*col, screenHeight-menuHeight, tileSize, menuHeight))
+			menuView.backgroundColor = UIColor.redColor()
+			
+			var row:CGFloat = 0
+			for option in categories.1 {
+				
+				// Draw Options
+				println("  > \(option)")
+				
+				let optionView   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+				optionView.frame = CGRectMake(0, tileSize*row, tileSize, tileSize)
+				optionView.backgroundColor = UIColor.greenColor()
+				optionView.setTitle(option.0, forState: UIControlState.Normal)
+				optionView.addTarget(self, action: "optionParser:", forControlEvents: UIControlEvents.TouchUpInside)
+				
+				menuView.addSubview(optionView)
+				
+				row++
+			}
+			
+			self.view.addSubview(menuView)
+			col++
+		}
+	}
+	
+	func optionParser(sender:UIButton!)
+	{
+		println("Button tapped")
 	}
 	
 	// MARK: Templates -
@@ -84,48 +97,11 @@ class ViewController: UIViewController {
 		theDrawView.setUnit = tileSize
 		
 		theDrawView.setRenderView(renderView,targetOutputView: outputView)
-		theDrawView.setMenuViewNew(interfaceModes)
+//		theDrawView.setMenuViewNew(interfaceModes)
 		
 		renderView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		outputView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		theDrawView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
-		
-		// Interfaces
-		interfaceModes.frame = CGRectMake(0, screenHeight-tileSize, screenWidth, tileSize)
-		
-		// Options
-		
-		optionClear.frame = CGRectMake(screenWidth-(tileSize), 0, tileSize, tileSize)
-		optionClear.backgroundColor = UIColor.redColor()
-		optionClear.setTitle("Nu", forState: UIControlState.Normal)
-		
-		optionSave.frame = CGRectMake(screenWidth-(2*tileSize), 0, tileSize, tileSize)
-		optionSave.setTitle("Sa", forState: UIControlState.Normal)
-		
-		// Modes
-		modeMirror.frame = CGRectMake(0, 0, tileSize, tileSize)
-		modeMirror.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		modeMirror.setTitle("Mi", forState: UIControlState.Normal)
-		
-		// Geometric
-		modeGeometric.frame = CGRectMake(tileSize, 0, tileSize, tileSize)
-		modeGeometric.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		modeGeometric.setTitle("Sq", forState: UIControlState.Normal)
-		
-		// Thickness
-		modeThick.frame = CGRectMake(tileSize*2, 0, tileSize, tileSize)
-		modeThick.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		modeThick.setTitle("Th", forState: UIControlState.Normal)
-		
-		// Roundess
-		modeRounded.frame = CGRectMake(tileSize*3, 0, tileSize, tileSize)
-		modeRounded.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		modeRounded.setTitle("Rn", forState: UIControlState.Normal)
-		
-		// Color
-		modeColor.frame = CGRectMake(tileSize*4, 0, tileSize, tileSize)
-		modeColor.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.1)
-		modeColor.setTitle("Cb", forState: UIControlState.Normal)
 			
 		templateGrid()
 	}
@@ -191,8 +167,6 @@ class ViewController: UIViewController {
 		let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-		
-		interfaceModes.hidden = true
 	}
 
 	// Modes
@@ -211,7 +185,6 @@ class ViewController: UIViewController {
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
 		theDrawView.modeMirror = modes[modeTarget]
-		modeMirror.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 	}
 	
 	// Color
@@ -230,7 +203,6 @@ class ViewController: UIViewController {
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
 		theDrawView.modeColor = modes[modeTarget]
-		modeColor.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 		theDrawView.setNeedsDisplay()
 	}
 	
@@ -250,7 +222,6 @@ class ViewController: UIViewController {
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
 		theDrawView.modeGeometric = modes[modeTarget]
-		modeGeometric.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 	}
 	
 	// Thickness
@@ -269,7 +240,6 @@ class ViewController: UIViewController {
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
 		theDrawView.modeThick = modes[modeTarget]
-		modeThick.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 	}
 	
 	@IBAction func modeRounded(sender: AnyObject)
@@ -286,7 +256,6 @@ class ViewController: UIViewController {
 		var modeTarget = modesIndex+1
 		if modeTarget > modes.count-1{ modeTarget = 0	}
 		theDrawView.modeRounded = modes[modeTarget]
-		modeRounded.setTitle( String(format:"%@",modes[modeTarget]), forState: UIControlState.Normal)
 	}
 	
 	@IBAction func modeContinuous(sender: AnyObject) {
