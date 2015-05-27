@@ -25,27 +25,29 @@ class DrawView: UIView {
 	
 	var setUnit: CGFloat!
 	
-	override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
+	override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
 	{
-		let touchesFix = touches.anyObject() as UITouch
-		
-		lastPoint = touchesFix.locationInView(self)
-		var newPoint = touchesFix.locationInView(self)
-		
-		if modeGeometric == "Gs"
-		{
-			newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
-			newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
+		if let touch = touches.first as? UITouch {
+			
+			lastPoint = touch.locationInView(self)
+			var newPoint = touch.locationInView(self)
+			
+			if modeGeometric == "Gs"
+			{
+				newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
+				newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
+			}
+			if modeGeometric == "Gp"
+			{
+				newPoint.x = valueRound(newPoint.x+(setUnit/8), grid: setUnit/4)
+				newPoint.y = valueRound(newPoint.y+(setUnit/8), grid: setUnit/4)
+			}
+			lastPoint = newPoint
 		}
-		if modeGeometric == "Gp"
-		{
-			newPoint.x = valueRound(newPoint.x+(setUnit/8), grid: setUnit/4)
-			newPoint.y = valueRound(newPoint.y+(setUnit/8), grid: setUnit/4)
-		}
-		lastPoint = newPoint
+		super.touchesBegan(touches , withEvent:event)
 	}
 	
-	override func touchesEnded(touches: NSSet, withEvent event: UIEvent)
+	override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent)
 	{
 		//Create the UIImage
 		UIGraphicsBeginImageContext(CGSizeMake(self.frame.width, self.frame.height))
@@ -59,75 +61,78 @@ class DrawView: UIView {
 		menuView.hidden = false
 	}
 	
-	
-	override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
+	override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent)
 	{
-		let touchesFix = touches.anyObject() as UITouch
-		
-		var newPoint = touchesFix.locationInView(self)
-		
-		menuView.hidden = true
-		
-		if( modeMirror == "Mv" ){
+		if let touch = touches.first as? UITouch
+		{
+			var newPoint = touch.locationInView(self)
 			
-			var fixedPoint = newPoint
+			menuView.hidden = true
 			
-			var i:Float = 0
-			var sides:Float = (Float(fixedPoint.x) / 40) + 10
-			var radius:Float = Float(fixedPoint.y)/2
-			var step = Float(M_PI * 2)/sides
-			
-			var offsetX:CGFloat = self.frame.width/2
-			var offsetY:CGFloat = self.frame.height/2
-			
-			while(i < sides){
-				var x = cos(i*step) * radius
-				var y = sin(i*step) * radius
-				addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
-				i += 1
+			if( modeMirror == "Mv" ){
+				
+				var fixedPoint = newPoint
+				
+				var i:Float = 0
+				var sides:Float = (Float(fixedPoint.x) / 40) + 10
+				var radius:Float = Float(fixedPoint.y)/2
+				var step = Float(M_PI * 2)/sides
+				
+				var offsetX:CGFloat = self.frame.width/2
+				var offsetY:CGFloat = self.frame.height/2
+				
+				while(i < sides){
+					var x = cos(i*step) * radius
+					var y = sin(i*step) * radius
+					addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
+					i += 1
+				}
 			}
-		}
-		else if( modeMirror == "Ms" ){
-			
-			var fixedPoint = newPoint
-			
-			var i:Float = 0
-			var sides:Float = (Float(fixedPoint.x) / 40) + 10
-			var radius:Float = Float(fixedPoint.y)/2
-			var step = Float(M_PI * 2)/sides
-			
-			var offsetX:CGFloat = self.frame.width/2
-			var offsetY:CGFloat = self.frame.height/2
-			
-			while(i < sides){
-				var x = cos(i*step) * radius
-				var y = sin(i*step) * radius
-				lastPoint = CGPointMake(offsetX,offsetY)
-				addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
-				i += 1
+			else if( modeMirror == "Ms" ){
+				
+				var fixedPoint = newPoint
+				
+				var i:Float = 0
+				var sides:Float = (Float(fixedPoint.x) / 40) + 10
+				var radius:Float = Float(fixedPoint.y)/2
+				var step = Float(M_PI * 2)/sides
+				
+				var offsetX:CGFloat = self.frame.width/2
+				var offsetY:CGFloat = self.frame.height/2
+				
+				while(i < sides){
+					var x = cos(i*step) * radius
+					var y = sin(i*step) * radius
+					lastPoint = CGPointMake(offsetX,offsetY)
+					addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
+					i += 1
+				}
 			}
-		}
-		else if( modeMirror == "Mo" ){
-			// Abstract shape
-			var i:Float = 0
-			var sides:Float = (Float(newPoint.x) / 40) + 10
-			var radius:Float = Float(newPoint.y)/2
-			var step = Float(M_PI * 2)/sides
-			
-			var offsetX:CGFloat = self.frame.width/2
-			var offsetY:CGFloat = self.frame.height/2
-			
-			while(i < sides){
-				var x = cos(i*step) * radius
-				var y = sin(i*step) * radius
-				lastPoint = CGPointMake(CGFloat(sin((i-4)*step) * radius)+offsetX,CGFloat(cos((i-4)*step) * radius)+offsetY)
-				addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
-				i += 1
+			else if( modeMirror == "Mo" ){
+				// Abstract shape
+				var i:Float = 0
+				var sides:Float = (Float(newPoint.x) / 40) + 10
+				var radius:Float = Float(newPoint.y)/2
+				var step = Float(M_PI * 2)/sides
+				
+				var offsetX:CGFloat = self.frame.width/2
+				var offsetY:CGFloat = self.frame.height/2
+				
+				while(i < sides){
+					var x = cos(i*step) * radius
+					var y = sin(i*step) * radius
+					lastPoint = CGPointMake(CGFloat(sin((i-4)*step) * radius)+offsetX,CGFloat(cos((i-4)*step) * radius)+offsetY)
+					addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
+					i += 1
+				}
 			}
+			else{
+				addStroke(newPoint)
+			}
+			
 		}
-		else{
-			addStroke(newPoint)
-		}
+		super.touchesBegan(touches , withEvent:event)
+		
 	}
 	
 	func addStroke(point:CGPoint)
@@ -183,7 +188,7 @@ class DrawView: UIView {
 		targetOutput = targetOutputView
 	}
 	
-	func setMenuView(targetMenuView:UIView)
+	func setMenuViewNew(targetMenuView:UIView)
 	{
 		menuView = targetMenuView
 	}
@@ -237,7 +242,7 @@ class DrawView: UIView {
 			if(line.color == "Cb"){ colorValue = UIColorFromRGB(0x000000).CGColor	}
 			if(line.color == "Cw"){ colorValue = UIColorFromRGB(0xffffff).CGColor	}
 			if(line.color == "Cr"){ colorValue = UIColorFromRGB(0xff0000).CGColor	}
-			if(line.color == "Cy"){ colorValue = UIColorFromRGB	}
+			if(line.color == "Cy"){ colorValue = UIColorFromRGB(0x72dec2).CGColor	}
 			if line.color == "Gg"
 			{
 				let colorIndex = (lineId+lines.count)/20 % gradientGrey.count

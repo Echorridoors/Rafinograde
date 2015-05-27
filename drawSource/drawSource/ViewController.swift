@@ -57,7 +57,7 @@ class ViewController: UIViewController {
 		theDrawView.setUnit = tileSize
 		
 		theDrawView.setRenderView(renderView,targetOutputView: outputView)
-		theDrawView.setMenuView(interfaceModes)
+		theDrawView.setMenuViewNew(interfaceModes)
 		
 		renderView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		outputView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
