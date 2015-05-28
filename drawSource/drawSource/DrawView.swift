@@ -224,7 +224,7 @@ class DrawView: UIView {
 			if(line.color == "white"){ colorValue = UIColorFromRGB(0xffffff).CGColor	}
 			if(line.color == "red"){ colorValue = UIColorFromRGB(0xff0000).CGColor	}
 			if(line.color == "cyan"){ colorValue = UIColorFromRGB(0x72dec2).CGColor	}
-			if line.color == "chess"{ colorValue = gradientDamier[((lineId+lines.count)/7 % gradientDamier.count)].CGColor }
+			if line.color == "chess"{ colorValue = gradientDamier[((lineId+lines.count)/5 % gradientDamier.count)].CGColor }
 			
 			// Thickness Modes
 			if line.modeThick == "1" { CGContextSetLineWidth(context, round(1)) }
@@ -232,11 +232,14 @@ class DrawView: UIView {
 			if line.modeThick == "3" { CGContextSetLineWidth(context, round(gridUnit-2)) }
 			if line.modeThick == "4" { CGContextSetLineWidth(context, round(gridUnit)) }
 			if line.modeThick == "osc" {
-				var lineWidth = (lineId+lines.count)/40 % 20
-				if lineWidth > 10
+				
+				let lineThickness:Int = 30
+				var lineWidth = (lineId+lines.count)/(lineThickness/10) % lineThickness
+				if lineWidth > (lineThickness/2)
 				{
-					lineWidth = 20 - lineWidth
+					lineWidth = lineThickness - lineWidth
 				}
+				lineWidth += 2
 				CGContextSetLineWidth(context, round(CGFloat(lineWidth)))
 			}
 			

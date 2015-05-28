@@ -91,7 +91,7 @@ class ViewController: UIViewController {
 			for button in targetView.subviews {
 				if button.tag == targetTag {
 					let targetButton:UIButton = button as! UIButton
-					targetButton.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.5)
+					targetButton.alpha = 0.5
 				}
 			}
 		}
@@ -106,7 +106,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["thickness"] = sender.currentTitle
-		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
 		
 		var theDrawView = drawView as DrawView
@@ -117,7 +116,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["system"] = sender.currentTitle
-		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
 		
 		if( sender.currentTitle == "clear" ){
@@ -136,7 +134,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["color"] = sender.currentTitle
-		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
 		
 		var theDrawView = drawView as DrawView
@@ -148,7 +145,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["rounding"] = sender.currentTitle
-		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
 		
 		var theDrawView = drawView as DrawView
@@ -159,7 +155,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["grid"] = sender.currentTitle
-		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
 		
 		var theDrawView = drawView as DrawView
@@ -170,7 +165,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["mirroir"] = sender.currentTitle
-		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
 		
 		var theDrawView = drawView as DrawView
