@@ -8,6 +8,9 @@
 
 import UIKit
 
+var menus:Dictionary<String,Array<String>> = ["":["",""]]
+var settings:Dictionary<String,String> = ["":""]
+
 class ViewController: UIViewController {
 		
 	@IBOutlet var gridView: UIView!
@@ -20,8 +23,19 @@ class ViewController: UIViewController {
 	var screenWidth:CGFloat!
 	var screenHeight:CGFloat!
 	
-	override func viewDidLoad() {
+	override func viewDidLoad()
+	{
 		super.viewDidLoad()
+		
+		menus = [
+			"mirror":["none","x","y","rotated"],
+			"shape":["freehand","squared","squared-half"],
+			"thickness":["1","2","3","4","5","oscillating"],
+			"rounding":["round","squared"],
+			"colour":["black","red","cyan","white","gradiant-black","chessboard"],
+			"options":["save","clear","hide"]
+		]
+		
 		templateStart()
 		loadMenu()
 		loadSettings()
@@ -38,51 +52,54 @@ class ViewController: UIViewController {
 	
 	func loadMenu()
 	{
-		let menus = [
-			"mirror":["none","x","y","rotated"],
-			"shape":["freehand","squared","squared-half"],
-			"thickness":["1","2","3","4","5","oscillating"],
-			"rounding":["round","squared"],
-			"colour":["black","red","cyan","white","gradiant-black","chessboard"],
-			"options":["save","clear","hide"]
-		]
-		
 		var col:CGFloat = 0
-		
 		for categories in menus {
-			
-			// Draw Menus
-			println("  : \(categories.0)")
-			
 			let menuHeight:CGFloat = CGFloat(categories.1.count) * tileSize
 			let menuView = UIView(frame: CGRectMake(tileSize*col, screenHeight-menuHeight, tileSize, menuHeight))
 			menuView.backgroundColor = UIColor.redColor()
-			
 			var row:CGFloat = 0
 			for option in categories.1 {
-				
-				// Draw Options
-				println("  > \(option)")
-				
+				let selectorString = String(format:"option%@:", categories.0.capitalizedString)
 				let optionView   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
 				optionView.frame = CGRectMake(0, tileSize*row, tileSize, tileSize)
 				optionView.backgroundColor = UIColor.greenColor()
 				optionView.setTitle(option.0, forState: UIControlState.Normal)
-				optionView.addTarget(self, action: "optionParser:", forControlEvents: UIControlEvents.TouchUpInside)
-				
+				optionView.addTarget(self, action: Selector(selectorString), forControlEvents: UIControlEvents.TouchUpInside)
+				optionView.titleLabel?.font = UIFont.boldSystemFontOfSize(0)
+				optionView.tag = 100 + Int(1 * col)
 				menuView.addSubview(optionView)
-				
 				row++
 			}
-			
 			self.view.addSubview(menuView)
 			col++
 		}
 	}
 	
-	func optionParser(sender:UIButton!)
+	func optionUnselect(targetTag:Int)
 	{
-		println("Button tapped")
+		for targetView in self.view.subviews {
+			for button in targetView.subviews {
+				if button.tag == targetTag {
+					let targetButton:UIButton = button as! UIButton
+					targetButton.backgroundColor = UIColor.greenColor()
+				}
+				
+			}
+		}
+	}
+	
+	func optionShape(sender:UIButton!)
+	{
+		optionUnselect(sender.tag)
+		settings["shape"] = sender.currentTitle
+		sender.backgroundColor = UIColor.redColor()
+	}
+	
+	func optionMirror(sender:UIButton!)
+	{
+		optionUnselect(sender.tag)
+		settings["mirroir"] = sender.currentTitle
+		sender.backgroundColor = UIColor.redColor()
 	}
 	
 	// MARK: Templates -
