@@ -33,7 +33,7 @@ class ViewController: UIViewController {
 			"thickness":["1","2","3","4","5","oscillating"],
 			"rounding":["round","squared"],
 			"colour":["black","red","cyan","white","gradiant-black","chessboard"],
-			"options":["save","clear","hide"]
+			"system":["save","clear","hide"]
 		]
 		
 		templateStart()
@@ -86,6 +86,34 @@ class ViewController: UIViewController {
 				
 			}
 		}
+	}
+	
+	func optionThickness(sender:UIButton!)
+	{
+		optionUnselect(sender.tag)
+		settings["system"] = sender.currentTitle
+		sender.backgroundColor = UIColor.redColor()
+	}
+	
+	func optionSystem(sender:UIButton!)
+	{
+		optionUnselect(sender.tag)
+		settings["system"] = sender.currentTitle
+		sender.backgroundColor = UIColor.redColor()
+	}
+	
+	func optionColour(sender:UIButton!)
+	{
+		optionUnselect(sender.tag)
+		settings["colour"] = sender.currentTitle
+		sender.backgroundColor = UIColor.redColor()
+	}
+	
+	func optionRounding(sender:UIButton!)
+	{
+		optionUnselect(sender.tag)
+		settings["rounding"] = sender.currentTitle
+		sender.backgroundColor = UIColor.redColor()
 	}
 	
 	func optionShape(sender:UIButton!)
