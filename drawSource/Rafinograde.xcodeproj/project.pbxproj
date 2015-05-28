@@ -13,6 +13,7 @@
 		033C93F1199CF5380054AD08 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033C93F0199CF5380054AD08 /* Images.xcassets */; };
 		033C9411199CFA160054AD08 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C9410199CFA160054AD08 /* DrawView.swift */; };
 		033C9413199CFFA30054AD08 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C9412199CFFA30054AD08 /* Lines.swift */; };
+		5764A2861B1790B00079318B /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 5764A2851B1790B00079318B /* icons */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +26,8 @@
 		033C93FC199CF5380054AD08 /* drawSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = drawSourceTests.swift; sourceTree = "<group>"; };
 		033C9410199CFA160054AD08 /* DrawView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		033C9412199CFFA30054AD08 /* Lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
-		572AFDFC1B1602AC00B0016A /* Rafinograde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Rafinograde.app; path = "/Users/VillaMoirai/Github/Rafinograde/drawSource/build/Debug-iphoneos/Rafinograde.app"; sourceTree = "<absolute>"; };
+		5764A2851B1790B00079318B /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
+		57A444271B179ACF00E85D10 /* Rafinograde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Rafinograde.app; path = "/Users/VillaMoirai/Github/Rafinograde/drawSource/build/Debug-iphoneos/Rafinograde.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 		033C93E6199CF5380054AD08 /* drawSource */ = {
 			isa = PBXGroup;
 			children = (
+				5764A2851B1790B00079318B /* icons */,
 				033C93E9199CF5380054AD08 /* AppDelegate.swift */,
 				033C93EB199CF5380054AD08 /* ViewController.swift */,
 				033C9412199CFFA30054AD08 /* Lines.swift */,
@@ -103,7 +106,7 @@
 			);
 			name = Rafinograde;
 			productName = drawSource;
-			productReference = 572AFDFC1B1602AC00B0016A /* Rafinograde.app */;
+			productReference = 57A444271B179ACF00E85D10 /* Rafinograde.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -143,6 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5764A2861B1790B00079318B /* icons in Resources */,
 				033C93EF199CF5380054AD08 /* Main.storyboard in Resources */,
 				033C93F1199CF5380054AD08 /* Images.xcassets in Resources */,
 			);

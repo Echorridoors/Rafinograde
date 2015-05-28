@@ -28,24 +28,23 @@ class ViewController: UIViewController {
 		super.viewDidLoad()
 		
 		menus = [
-			"mirror":["none","x","y","rotated"],
-			"shape":["freehand","squared","squared-half"],
-			"thickness":["1","2","3","4","5","oscillating"],
-			"rounding":["round","squared"],
-			"colour":["black","red","cyan","white","gradiant-black","chessboard"],
-			"system":["save","clear","hide"]
+			"mirror":["none","x","y","radius"],
+			"grid":["freehand","large","small"],
+			"thickness":["1","2","3","4","osc"],
+			"rounding":["round","square"],
+			"color":["black","red","cyan","gradiant-black","chess"],
+			"system":["save","clear","share"]
 		]
+		
+		// Set default settings
+		for categories in menus {
+			settings[categories.0] = categories.1[0]
+		}
+		
+		println(settings)
 		
 		templateStart()
 		loadMenu()
-		loadSettings()
-	}
-	
-	// MARK: Settings -
-	
-	func loadSettings()
-	{
-
 	}
 	
 	// MARK: Menu -
@@ -56,18 +55,29 @@ class ViewController: UIViewController {
 		for categories in menus {
 			let menuHeight:CGFloat = CGFloat(categories.1.count) * tileSize
 			let menuView = UIView(frame: CGRectMake(tileSize*col, screenHeight-menuHeight, tileSize, menuHeight))
-			menuView.backgroundColor = UIColor.redColor()
+			menuView.tag = 66
 			var row:CGFloat = 0
 			for option in categories.1 {
+				
+				// Icon
+				let iconView = UIImageView(frame: CGRectMake(0, tileSize*row, tileSize, tileSize))
+				
+				let iconString = String(format: "%@.%@", categories.0, option)
+				
+				iconView.image = UIImage(named: iconString)
+//				iconView.contentMode = UIViewContentMode.ScaleAspectFit
+				menuView.addSubview(iconView)
+				
+				// Button
 				let selectorString = String(format:"option%@:", categories.0.capitalizedString)
 				let optionView   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
 				optionView.frame = CGRectMake(0, tileSize*row, tileSize, tileSize)
-				optionView.backgroundColor = UIColor.greenColor()
 				optionView.setTitle(option.0, forState: UIControlState.Normal)
 				optionView.addTarget(self, action: Selector(selectorString), forControlEvents: UIControlEvents.TouchUpInside)
 				optionView.titleLabel?.font = UIFont.boldSystemFontOfSize(0)
 				optionView.tag = 100 + Int(1 * col)
 				menuView.addSubview(optionView)
+				
 				row++
 			}
 			self.view.addSubview(menuView)
@@ -81,53 +91,63 @@ class ViewController: UIViewController {
 			for button in targetView.subviews {
 				if button.tag == targetTag {
 					let targetButton:UIButton = button as! UIButton
-					targetButton.backgroundColor = UIColor.greenColor()
+					targetButton.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0.5)
 				}
-				
 			}
 		}
+	}
+	
+	func optionsHide()
+	{
+		
 	}
 	
 	func optionThickness(sender:UIButton!)
 	{
 		optionUnselect(sender.tag)
-		settings["system"] = sender.currentTitle
-		sender.backgroundColor = UIColor.redColor()
+		settings["thickness"] = sender.currentTitle
+		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+		optionsHide()
 	}
 	
 	func optionSystem(sender:UIButton!)
 	{
 		optionUnselect(sender.tag)
 		settings["system"] = sender.currentTitle
-		sender.backgroundColor = UIColor.redColor()
+		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+		optionsHide()
 	}
 	
-	func optionColour(sender:UIButton!)
+	func optionColor(sender:UIButton!)
 	{
 		optionUnselect(sender.tag)
-		settings["colour"] = sender.currentTitle
-		sender.backgroundColor = UIColor.redColor()
+		settings["color"] = sender.currentTitle
+		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+		optionsHide()
 	}
 	
 	func optionRounding(sender:UIButton!)
 	{
 		optionUnselect(sender.tag)
 		settings["rounding"] = sender.currentTitle
-		sender.backgroundColor = UIColor.redColor()
+		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+		optionsHide()
 	}
 	
-	func optionShape(sender:UIButton!)
+	func optionGrid(sender:UIButton!)
 	{
 		optionUnselect(sender.tag)
-		settings["shape"] = sender.currentTitle
-		sender.backgroundColor = UIColor.redColor()
+		settings["grid"] = sender.currentTitle
+		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+		optionsHide()
 	}
 	
 	func optionMirror(sender:UIButton!)
 	{
 		optionUnselect(sender.tag)
 		settings["mirroir"] = sender.currentTitle
-		sender.backgroundColor = UIColor.redColor()
+		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
+		optionsHide()
 	}
 	
 	// MARK: Templates -
