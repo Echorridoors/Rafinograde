@@ -31,9 +31,10 @@ class ViewController: UIViewController {
 			"mirror":["none","x","y","radius"],
 			"grid":["freehand","large","small"],
 			"thickness":["1","2","3","4","osc"],
-			"rounding":["round","square"],
-			"color":["black","red","cyan","gradiant-black","chess"],
-			"system":["save","clear","share"]
+			"rounding":["round","square","none"],
+			"color":["black","red","cyan","white","chess"],
+			"system":["save","clear","share"],
+			"filter":["glitch","sorter"]
 		]
 		
 		// Set default settings
@@ -61,11 +62,10 @@ class ViewController: UIViewController {
 				
 				// Icon
 				let iconView = UIImageView(frame: CGRectMake(0, tileSize*row, tileSize, tileSize))
-				
 				let iconString = String(format: "%@.%@", categories.0, option)
 				
 				iconView.image = UIImage(named: iconString)
-//				iconView.contentMode = UIViewContentMode.ScaleAspectFit
+				iconView.contentMode = UIViewContentMode.ScaleAspectFit
 				menuView.addSubview(iconView)
 				
 				// Button
@@ -108,6 +108,9 @@ class ViewController: UIViewController {
 		settings["thickness"] = sender.currentTitle
 		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeThick = settings["thickness"]!
 	}
 	
 	func optionSystem(sender:UIButton!)
@@ -116,6 +119,17 @@ class ViewController: UIViewController {
 		settings["system"] = sender.currentTitle
 		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
+		
+		if( sender.currentTitle == "clear" ){
+			let randomColour = Int(arc4random_uniform(5))
+			let colours = [UIColorFromRGB(0x72dec2).CGColor,UIColorFromRGB(0xff0000).CGColor,UIColorFromRGB(0x222222).CGColor,UIColorFromRGB(0xffffff).CGColor,UIColorFromRGB(0xdddddd).CGColor,UIColorFromRGB(0x999999).CGColor]
+			let randomIndex = Int(arc4random_uniform(UInt32(colours.count)))
+			self.outputView.backgroundColor = UIColor(CGColor: colours[randomIndex])
+			var theDrawView = drawView as DrawView
+			theDrawView.lines = []
+			renderView.image = UIImage(named: "")
+			theDrawView.setNeedsDisplay()
+		}
 	}
 	
 	func optionColor(sender:UIButton!)
@@ -124,6 +138,10 @@ class ViewController: UIViewController {
 		settings["color"] = sender.currentTitle
 		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeColor = settings["color"]!
+		theDrawView.setNeedsDisplay()
 	}
 	
 	func optionRounding(sender:UIButton!)
@@ -132,6 +150,9 @@ class ViewController: UIViewController {
 		settings["rounding"] = sender.currentTitle
 		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeRounded = settings["rounding"]!
 	}
 	
 	func optionGrid(sender:UIButton!)
@@ -140,6 +161,9 @@ class ViewController: UIViewController {
 		settings["grid"] = sender.currentTitle
 		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeGeometric = settings["grid"]!
 	}
 	
 	func optionMirror(sender:UIButton!)
@@ -148,6 +172,9 @@ class ViewController: UIViewController {
 		settings["mirroir"] = sender.currentTitle
 		sender.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.5)
 		optionsHide()
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeMirror = settings["mirroir"]!
 	}
 	
 	// MARK: Templates -
@@ -162,67 +189,11 @@ class ViewController: UIViewController {
 		theDrawView.setUnit = tileSize
 		
 		theDrawView.setRenderView(renderView,targetOutputView: outputView)
-//		theDrawView.setMenuViewNew(interfaceModes)
 		
 		renderView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		outputView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		theDrawView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
-			
-		templateGrid()
-	}
-	
-	func templateGrid()
-	{
-		var lineView = UIView(frame: CGRectMake(tileSize, tileSize, 1, screenHeight-(2*tileSize)))
-		lineView.backgroundColor = UIColor.whiteColor()
-		self.gridView.addSubview(lineView)
 		
-		lineView = UIView(frame: CGRectMake(screenWidth-tileSize, tileSize, 1, screenHeight-(2*tileSize)))
-		lineView.backgroundColor = UIColor.whiteColor()
-		self.gridView.addSubview(lineView)
-		
-		lineView = UIView(frame: CGRectMake(tileSize, tileSize, screenWidth-(2*tileSize), 1))
-		lineView.backgroundColor = UIColor.whiteColor()
-		self.gridView.addSubview(lineView)
-		
-		lineView = UIView(frame: CGRectMake(tileSize, screenHeight-tileSize, screenWidth-(2*tileSize), 1))
-		lineView.backgroundColor = UIColor.whiteColor()
-		self.gridView.addSubview(lineView)
-		
-		var x:CGFloat = 1
-		while x < 18
-		{
-			var y:CGFloat = 1
-			while y < 30
-			{
-				var posX:CGFloat =  CGFloat( Int( tileSize+(tileSize/2*x) ) )
-				var posY:CGFloat =  CGFloat( Int( tileSize+(tileSize/2*y) ) )
-				
-				var lineView = UIView(frame: CGRectMake( posX, posY, 1, 1))
-				lineView.backgroundColor = UIColor.whiteColor()
-				self.gridView.addSubview(lineView)
-				
-				y = y + 1
-			}
-			
-			x = x + 1
-		}
-	}
-	
-	@IBAction func optionClear(sender: AnyObject)
-	{
-		let randomColour = Int(arc4random_uniform(5))
-		
-		let colours = [UIColorFromRGB(0x72dec2).CGColor,UIColorFromRGB(0xff0000).CGColor,UIColorFromRGB(0x222222).CGColor,UIColorFromRGB(0xffffff).CGColor,UIColorFromRGB(0xdddddd).CGColor,UIColorFromRGB(0x999999).CGColor]
-		let randomIndex = Int(arc4random_uniform(UInt32(colours.count)))
-		
-		self.outputView.backgroundColor = UIColor(CGColor: colours[randomIndex])
-		
-		NSLog("> OPTI | Clear")
-		var theDrawView = drawView as DrawView
-		theDrawView.lines = []
-		renderView.image = UIImage(named: "")
-		theDrawView.setNeedsDisplay()
 	}
 	
 	@IBAction func optionSave(sender: AnyObject)
@@ -232,95 +203,6 @@ class ViewController: UIViewController {
 		let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
 		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-	}
-
-	// Modes
-	
-	@IBAction func modeMirror(sender: AnyObject)
-	{
-		modeMirrorToggle()
-	}
-	
-	func modeMirrorToggle()
-	{
-		var theDrawView = drawView as DrawView
-		
-		var modes = ["M","Mx","My","Mr","Ms","Mo","Mv"]
-		var modesIndex = find(modes, theDrawView.modeMirror)!
-		var modeTarget = modesIndex+1
-		if modeTarget > modes.count-1{ modeTarget = 0	}
-		theDrawView.modeMirror = modes[modeTarget]
-	}
-	
-	// Color
-	
-	@IBAction func modeColor(sender: AnyObject)
-	{
-		modeColorToggle()
-	}
-	
-	func modeColorToggle()
-	{
-		var theDrawView = drawView as DrawView
-		
-		var modes = ["Cb","Cw","Cy","Cr","Gg","Gd","Gh"]
-		var modesIndex = find(modes, theDrawView.modeColor)!
-		var modeTarget = modesIndex+1
-		if modeTarget > modes.count-1{ modeTarget = 0	}
-		theDrawView.modeColor = modes[modeTarget]
-		theDrawView.setNeedsDisplay()
-	}
-	
-	// Geometric
-	
-	@IBAction func modeGeometric(sender: AnyObject)
-	{
-		modeGeometricToggle()
-	}
-	
-	func modeGeometricToggle()
-	{
-		var theDrawView = drawView as DrawView
-		
-		var modes = ["Gf","Gs","Gp"]
-		var modesIndex = find(modes, theDrawView.modeGeometric)!
-		var modeTarget = modesIndex+1
-		if modeTarget > modes.count-1{ modeTarget = 0	}
-		theDrawView.modeGeometric = modes[modeTarget]
-	}
-	
-	// Thickness
-	
-	@IBAction func modeThick(sender: AnyObject)
-	{
-		modeThickToggle()
-	}
-	
-	func modeThickToggle()
-	{
-		var theDrawView = drawView as DrawView
-		
-		var modes = ["T1","T2","T3","T4","T5","Ta"]
-		var modesIndex = find(modes, theDrawView.modeThick)!
-		var modeTarget = modesIndex+1
-		if modeTarget > modes.count-1{ modeTarget = 0	}
-		theDrawView.modeThick = modes[modeTarget]
-	}
-	
-	@IBAction func modeRounded(sender: AnyObject)
-	{
-		modeRoundedToggle()
-	}
-	
-	func modeRoundedToggle()
-	{
-		var theDrawView = drawView as DrawView
-		
-		var modes = ["Rr","Rs"]
-		var modesIndex = find(modes, theDrawView.modeRounded)!
-		var modeTarget = modesIndex+1
-		if modeTarget > modes.count-1{ modeTarget = 0	}
-		theDrawView.modeRounded = modes[modeTarget]
 	}
 	
 	@IBAction func modeContinuous(sender: AnyObject) {

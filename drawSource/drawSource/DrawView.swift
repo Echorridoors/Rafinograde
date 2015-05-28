@@ -13,7 +13,7 @@ class DrawView: UIView {
 	
 	var lines:[Line] = []
 	var lastPoint: CGPoint!
-	var modeColor = "Cb"
+	var modeColor = ""
 	var modeMirror = "Mr"
 	var modeGeometric = "Gp"
 	var modeThick = "Ta"
@@ -139,12 +139,12 @@ class DrawView: UIView {
 	{
 		
 		var newPoint = point
-		if modeGeometric == "Gs"
+		if modeGeometric == "large"
 		{
 			newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
 			newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
 		}
-		if modeGeometric == "Gp"
+		if modeGeometric == "small"
 		{
 			newPoint.x = valueRound(newPoint.x+(setUnit/8), grid: setUnit/4)
 			newPoint.y = valueRound(newPoint.y+(setUnit/8), grid: setUnit/4)
@@ -204,25 +204,6 @@ class DrawView: UIView {
 		
 		var lineId = 0
 		
-		let hohokumColours = [
-			UIColorFromRGB(0xffa726),
-			UIColorFromRGB(0xef1180),
-			UIColorFromRGB(0xb02389),
-			UIColorFromRGB(0xe65a4d),
-			UIColorFromRGB(0xffef04),
-			UIColorFromRGB(0x20c6e0),
-			UIColorFromRGB(0x3580c4)
-		]
-		let gradientGrey = [
-			UIColorFromRGB(0x000000),
-			UIColorFromRGB(0x333333),
-			UIColorFromRGB(0x999999),
-			UIColorFromRGB(0xcccccc),
-			UIColorFromRGB(0xeeeeee),
-			UIColorFromRGB(0xcccccc),
-			UIColorFromRGB(0x999999),
-			UIColorFromRGB(0x333333)
-		]
 		let gradientDamier = [
 			UIColorFromRGB(0x000000),
 			UIColorFromRGB(0xffffff)
@@ -239,46 +220,29 @@ class DrawView: UIView {
 			var colorValue:CGColor = UIColorFromRGB(0xffffff).CGColor
 	
 			// Colour Modes
-			if(line.color == "Cb"){ colorValue = UIColorFromRGB(0x000000).CGColor	}
-			if(line.color == "Cw"){ colorValue = UIColorFromRGB(0xffffff).CGColor	}
-			if(line.color == "Cr"){ colorValue = UIColorFromRGB(0xff0000).CGColor	}
-			if(line.color == "Cy"){ colorValue = UIColorFromRGB(0x72dec2).CGColor	}
-			if line.color == "Gg"
-			{
-				let colorIndex = (lineId+lines.count)/20 % gradientGrey.count
-				colorValue = gradientGrey[colorIndex].CGColor
-			}
-			if line.color == "Gd"
-			{
-				let colorIndex = (lineId+lines.count)/7 % gradientDamier.count
-				colorValue = gradientDamier[colorIndex].CGColor
-			}
-			if line.color == "Gh"
-			{
-				let colorIndex = (lineId+lines.count)/7 % hohokumColours.count
-				colorValue = hohokumColours[colorIndex].CGColor
-			}
+			if(line.color == "black"){ colorValue = UIColorFromRGB(0x000000).CGColor	}
+			if(line.color == "white"){ colorValue = UIColorFromRGB(0xffffff).CGColor	}
+			if(line.color == "red"){ colorValue = UIColorFromRGB(0xff0000).CGColor	}
+			if(line.color == "cyan"){ colorValue = UIColorFromRGB(0x72dec2).CGColor	}
+			if line.color == "chess"{ colorValue = gradientDamier[((lineId+lines.count)/7 % gradientDamier.count)].CGColor }
 			
 			// Thickness Modes
-			if line.modeThick == "T1" { CGContextSetLineWidth(context, round(1)) }
-			if line.modeThick == "T2" { CGContextSetLineWidth(context, round(gridUnit/3-2)) }
-			if line.modeThick == "T3" { CGContextSetLineWidth(context, round(gridUnit/2-2)) }
-			if line.modeThick == "T4" { CGContextSetLineWidth(context, round(gridUnit-2)) }
-			if line.modeThick == "T5" { CGContextSetLineWidth(context, round(gridUnit)) }
-			
-			if line.modeThick == "Ta" {
+			if line.modeThick == "1" { CGContextSetLineWidth(context, round(1)) }
+			if line.modeThick == "2" { CGContextSetLineWidth(context, round(gridUnit/2-2)) }
+			if line.modeThick == "3" { CGContextSetLineWidth(context, round(gridUnit-2)) }
+			if line.modeThick == "4" { CGContextSetLineWidth(context, round(gridUnit)) }
+			if line.modeThick == "osc" {
 				var lineWidth = (lineId+lines.count)/40 % 20
-				
 				if lineWidth > 10
 				{
 					lineWidth = 20 - lineWidth
 				}
-				
 				CGContextSetLineWidth(context, round(CGFloat(lineWidth)))
 			}
 			
-			if line.modeRounded == "Rr" { CGContextSetLineCap(context, kCGLineCapRound) }
-			if line.modeRounded == "Rs" { CGContextSetLineCap(context, kCGLineCapSquare) }
+			// Rounding Modes
+			if line.modeRounded == "round" { CGContextSetLineCap(context, kCGLineCapRound) }
+			if line.modeRounded == "square" { CGContextSetLineCap(context, kCGLineCapSquare) }
 			
 			if startX == endX && startY == endY
 			{
@@ -290,7 +254,8 @@ class DrawView: UIView {
 			CGContextSetStrokeColorWithColor(context, colorValue)
 			CGContextStrokePath(context)
 			
-			if line.modeMirror == "Mx"
+			// Mirror
+			if line.modeMirror == "x"
 			{
 				var mirrorStart = self.frame.size.width/2 - ( startX - self.frame.size.width/2 )
 				var mirrorEnd = self.frame.size.width/2 - ( endX - self.frame.size.width/2 )
@@ -301,7 +266,7 @@ class DrawView: UIView {
 				CGContextStrokePath(context)
 			}
 			
-			if line.modeMirror == "My"
+			if line.modeMirror == "y"
 			{
 				var mirrorStart = self.frame.size.height/2 - ( startY - self.frame.size.height/2 )
 				var mirrorEnd = self.frame.size.height/2 - ( endY - self.frame.size.height/2 )
@@ -312,7 +277,7 @@ class DrawView: UIView {
 				CGContextStrokePath(context)
 			}
 			
-			if line.modeMirror == "Mr"
+			if line.modeMirror == "radius"
 			{
 				var mirrorStart = self.frame.size.height/2 - ( startY - self.frame.size.height/2 )
 				var mirrorEnd = self.frame.size.height/2 - ( endY - self.frame.size.height/2 )
