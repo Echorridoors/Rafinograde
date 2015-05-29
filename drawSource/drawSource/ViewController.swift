@@ -60,8 +60,15 @@ class ViewController: UIViewController {
 	
 	// MARK: Menu -
 	
-	func updateSelectionMenu(iconTag:Int)
+	func updateSelectionMenu(iconTag:Int, iconString:String)
 	{
+		println("$ SELCT | Updating view #\(iconTag) -> \(iconString)")
+		for iconView in selectionView.subviews {
+			if iconView.tag != iconTag { continue }
+			var iconView = iconView as! UIImageView
+			iconView.image = UIImage(named: iconString)
+			iconView.backgroundColor = UIColor.redColor()
+		}
 	}
 	
 	func createSelectionMenu()
@@ -151,6 +158,8 @@ class ViewController: UIViewController {
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeThick = settings["thickness"]!
+		
+		updateSelectionMenu(592, iconString: String(format:"thickness.%@", sender.currentTitle!) )
 	}
 	
 	func optionSystem(sender:UIButton!)
@@ -169,6 +178,14 @@ class ViewController: UIViewController {
 			renderView.image = UIImage(named: "")
 			theDrawView.setNeedsDisplay()
 		}
+		
+		updateSelectionMenu(596, iconString: String(format:"system.%@", sender.currentTitle!) )
+	}
+	
+	func optionFilter(sender:UIButton!)
+	{
+		
+		updateSelectionMenu(594, iconString: String(format:"color.%@", sender.currentTitle!) )
 	}
 	
 	func optionColor(sender:UIButton!)
@@ -180,6 +197,8 @@ class ViewController: UIViewController {
 		var theDrawView = drawView as DrawView
 		theDrawView.modeColor = settings["color"]!
 		theDrawView.setNeedsDisplay()
+		
+		updateSelectionMenu(593, iconString: String(format:"color.%@", sender.currentTitle!) )
 	}
 	
 	func optionRounding(sender:UIButton!)
@@ -190,6 +209,8 @@ class ViewController: UIViewController {
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeRounded = settings["rounding"]!
+		
+		updateSelectionMenu(595, iconString: String(format:"rounding.%@", sender.currentTitle!) )
 	}
 	
 	func optionGrid(sender:UIButton!)
@@ -200,7 +221,8 @@ class ViewController: UIViewController {
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeGeometric = settings["grid"]!
-		updateSelectionMenu(590)
+	
+		updateSelectionMenu(590, iconString: String(format:"grid.%@", sender.currentTitle!) )
 	}
 	
 	func optionMirror(sender:UIButton!)
@@ -211,6 +233,8 @@ class ViewController: UIViewController {
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeMirror = settings["mirroir"]!
+		
+		updateSelectionMenu(591, iconString: String(format:"mirror.%@", sender.currentTitle!) )
 	}
 	
 	// MARK: Templates -
