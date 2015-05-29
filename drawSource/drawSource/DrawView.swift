@@ -82,71 +82,9 @@ class DrawView: UIView {
 			}
 			
 			menuView.hidden = true
-			
-			if( modeMirror == "Mv" ){
-				
-				var fixedPoint = newPoint
-				
-				var i:Float = 0
-				var sides:Float = (Float(fixedPoint.x) / 40) + 10
-				var radius:Float = Float(fixedPoint.y)/2
-				var step = Float(M_PI * 2)/sides
-				
-				var offsetX:CGFloat = self.frame.width/2
-				var offsetY:CGFloat = self.frame.height/2
-				
-				while(i < sides){
-					var x = cos(i*step) * radius
-					var y = sin(i*step) * radius
-					addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
-					i += 1
-				}
-			}
-			else if( modeMirror == "Ms" ){
-				
-				var fixedPoint = newPoint
-				
-				var i:Float = 0
-				var sides:Float = (Float(fixedPoint.x) / 40) + 10
-				var radius:Float = Float(fixedPoint.y)/2
-				var step = Float(M_PI * 2)/sides
-				
-				var offsetX:CGFloat = self.frame.width/2
-				var offsetY:CGFloat = self.frame.height/2
-				
-				while(i < sides){
-					var x = cos(i*step) * radius
-					var y = sin(i*step) * radius
-					lastPoint = CGPointMake(offsetX,offsetY)
-					addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
-					i += 1
-				}
-			}
-			else if( modeMirror == "Mo" ){
-				// Abstract shape
-				var i:Float = 0
-				var sides:Float = (Float(newPoint.x) / 40) + 10
-				var radius:Float = Float(newPoint.y)/2
-				var step = Float(M_PI * 2)/sides
-				
-				var offsetX:CGFloat = self.frame.width/2
-				var offsetY:CGFloat = self.frame.height/2
-				
-				while(i < sides){
-					var x = cos(i*step) * radius
-					var y = sin(i*step) * radius
-					lastPoint = CGPointMake(CGFloat(sin((i-4)*step) * radius)+offsetX,CGFloat(cos((i-4)*step) * radius)+offsetY)
-					addStroke(CGPointMake(CGFloat(x)+offsetX,CGFloat(y)+offsetY))
-					i += 1
-				}
-			}
-			else{
-				addStroke(newPoint)
-			}
-			
+			addStroke(newPoint)
 		}
 		super.touchesBegan(touches , withEvent:event)
-		
 	}
 	
 	func addStroke(point:CGPoint)
@@ -306,6 +244,7 @@ class DrawView: UIView {
 				CGContextSetStrokeColorWithColor(context, colorValue)
 				CGContextStrokePath(context)
 			}
+			
 			lineId += 1
 			
 		}
