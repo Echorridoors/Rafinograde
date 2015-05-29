@@ -32,17 +32,20 @@ class DrawView: UIView {
 			lastPoint = touch.locationInView(self)
 			var newPoint = touch.locationInView(self)
 			
-			if modeGeometric == "Gs"
+			if modeGeometric == "large"
 			{
+				lastPoint.x = valueRound(lastPoint.x+(setUnit/4), grid: setUnit/2)
+				lastPoint.y = valueRound(lastPoint.y+(setUnit/4), grid: setUnit/2)
 				newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
 				newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
 			}
-			if modeGeometric == "Gp"
+			if modeGeometric == "small"
 			{
+				lastPoint.x = valueRound(lastPoint.x+(setUnit/8), grid: setUnit/4)
+				lastPoint.y = valueRound(lastPoint.y+(setUnit/8), grid: setUnit/4)
 				newPoint.x = valueRound(newPoint.x+(setUnit/8), grid: setUnit/4)
 				newPoint.y = valueRound(newPoint.y+(setUnit/8), grid: setUnit/4)
 			}
-			lastPoint = newPoint
 		}
 		super.touchesBegan(touches , withEvent:event)
 	}
@@ -66,6 +69,17 @@ class DrawView: UIView {
 		if let touch = touches.first as? UITouch
 		{
 			var newPoint = touch.locationInView(self)
+			
+			if modeGeometric == "large"
+			{
+				newPoint.x = valueRound(newPoint.x+(setUnit/4), grid: setUnit/2)
+				newPoint.y = valueRound(newPoint.y+(setUnit/4), grid: setUnit/2)
+			}
+			if modeGeometric == "small"
+			{
+				newPoint.x = valueRound(newPoint.x+(setUnit/8), grid: setUnit/4)
+				newPoint.y = valueRound(newPoint.y+(setUnit/8), grid: setUnit/4)
+			}
 			
 			menuView.hidden = true
 			

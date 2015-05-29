@@ -34,8 +34,8 @@ class ViewController: UIViewController {
 			"thickness":["1","2","3","4","osc"],
 			"rounding":["round","square","none"],
 			"color":["black","red","cyan","white","chess"],
-			"system":["save","clear","share"],
-			"filter":["glitch","sorter"]
+			"system":["share","save","clear"],
+			"filter":[""]
 		]
 		
 		// Set default settings
@@ -56,7 +56,6 @@ class ViewController: UIViewController {
 		theDrawView.modeColor = settings["color"]!
 		theDrawView.setNeedsDisplay()
 		
-		createSelectionMenu()
 	}
 	
 	// MARK: Menu -
@@ -78,16 +77,22 @@ class ViewController: UIViewController {
 		var col:CGFloat = 0
 		for categories in menus {
 			
-			var row:CGFloat = 0
+			if categories.0 == "rounding" { col = 4 }
 			
-			// Icon
-			let iconView = UIImageView(frame: CGRectMake(tileSize*col, 0, tileSize, tileSize))
-			let iconString = String(format: "%@.%@", categories.0, settings[categories.0]!)
+			if categories.0 != "system" && categories.0 != "filter" {
+				
+				// Icon
+				let iconView = UIImageView(frame: CGRectMake(tileSize*col, 0, tileSize, tileSize))
+				let iconString = String(format: "%@.%@", categories.0, settings[categories.0]!)
+				
+				iconView.image = UIImage(named: iconString)
+				iconView.contentMode = UIViewContentMode.ScaleAspectFit
+				iconView.tag = 590 + Int(col)
+				selectionView.addSubview(iconView)
+				
+			}
 			
-			iconView.image = UIImage(named: iconString)
-			iconView.contentMode = UIViewContentMode.ScaleAspectFit
-			iconView.tag = 590 + Int(col)
-			selectionView.addSubview(iconView)
+			
 			
 			col++
 		}
@@ -101,6 +106,11 @@ class ViewController: UIViewController {
 		var col:CGFloat = 0
 		for categories in menus {
 			let menuHeight:CGFloat = CGFloat(categories.1.count + 1) * tileSize
+			
+			if categories.0 == "rounding" { col = 4 }
+			if categories.0 == "system" { col = 7 }
+			if categories.0 == "filter" { col = 5 }
+			
 			let menuView = UIView(frame: CGRectMake(tileSize*col, screenHeight-menuHeight, tileSize, menuHeight))
 			menuView.tag = 66
 			var row:CGFloat = 0
@@ -130,6 +140,8 @@ class ViewController: UIViewController {
 			col++
 		}
 		
+		createSelectionMenu()
+		
 		// Collapse/Expand menu
 		
 		let iconView = UIImageView(frame: CGRectMake(screenWidth-tileSize, screenHeight-tileSize, tileSize, tileSize))
@@ -138,11 +150,10 @@ class ViewController: UIViewController {
 		iconView.tag = 977
 		self.view.addSubview(iconView)
 		
-		let optionView   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-		optionView.frame = CGRectMake(screenWidth-tileSize, screenHeight-tileSize, tileSize, tileSize)
-		optionView.addTarget(self, action: Selector("toggleMenu"), forControlEvents: UIControlEvents.TouchUpInside)
-		optionView.titleLabel?.font = UIFont.boldSystemFontOfSize(0)
-		self.view.addSubview(optionView)
+		let toggleButton   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+		toggleButton.frame = CGRectMake(0, screenHeight-tileSize, screenWidth, tileSize)
+		toggleButton.addTarget(self, action: Selector("toggleMenu"), forControlEvents: UIControlEvents.TouchUpInside)
+		self.view.addSubview(toggleButton)
 		
 	}
 	
@@ -176,8 +187,7 @@ class ViewController: UIViewController {
 		settings["system"] = sender.currentTitle
 		
 		if( sender.currentTitle == "clear" ){
-			let randomColour = Int(arc4random_uniform(5))
-			let colours = [UIColorFromRGB(0x72dec2).CGColor,UIColorFromRGB(0xff0000).CGColor,UIColorFromRGB(0x222222).CGColor,UIColorFromRGB(0xffffff).CGColor,UIColorFromRGB(0xdddddd).CGColor,UIColorFromRGB(0x999999).CGColor]
+			let colours = [UIColorFromRGB(0xff0000).CGColor,UIColorFromRGB(0xefefef).CGColor,UIColorFromRGB(0xdddddd).CGColor,UIColorFromRGB(0x999999).CGColor]
 			let randomIndex = Int(arc4random_uniform(UInt32(colours.count)))
 			self.outputView.backgroundColor = UIColor(CGColor: colours[randomIndex])
 			var theDrawView = drawView as DrawView
@@ -186,13 +196,10 @@ class ViewController: UIViewController {
 			theDrawView.setNeedsDisplay()
 		}
 		
-		updateSelectionMenu(596, iconString: String(format:"system.%@", sender.currentTitle!) )
 	}
 	
 	func optionFilter(sender:UIButton!)
 	{
-		
-		updateSelectionMenu(594, iconString: String(format:"color.%@", sender.currentTitle!) )
 	}
 	
 	func optionColor(sender:UIButton!)
@@ -215,7 +222,7 @@ class ViewController: UIViewController {
 		var theDrawView = drawView as DrawView
 		theDrawView.modeRounded = settings["rounding"]!
 		
-		updateSelectionMenu(595, iconString: String(format:"rounding.%@", sender.currentTitle!) )
+		updateSelectionMenu(594, iconString: String(format:"rounding.%@", sender.currentTitle!) )
 	}
 	
 	func optionGrid(sender:UIButton!)
