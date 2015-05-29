@@ -10,6 +10,7 @@ import UIKit
 
 var menus:Dictionary<String,Array<String>> = ["":["",""]]
 var settings:Dictionary<String,String> = ["":""]
+var selectionView:UIView!
 
 class ViewController: UIViewController {
 		
@@ -42,19 +43,59 @@ class ViewController: UIViewController {
 			settings[categories.0] = categories.1[0]
 		}
 		
-		println(settings)
-		
 		templateStart()
 		loadMenu()
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeMirror = settings["mirror"]!
+		theDrawView.modeMirror = settings["grid"]!
+		theDrawView.modeMirror = settings["thickness"]!
+		theDrawView.modeMirror = settings["rounding"]!
+		theDrawView.modeColor = settings["color"]!
+		theDrawView.setNeedsDisplay()
+		
+		createSelectionMenu()
+		
 	}
 	
 	// MARK: Menu -
+	
+	func updateSelectionMenu(iconTag:Int)
+	{
+	}
+	
+	func createSelectionMenu()
+	{
+		selectionView = UIView(frame: CGRectMake(0, screenHeight-tileSize, tileSize*7, tileSize))
+		selectionView.backgroundColor = UIColor.redColor()
+		
+		var col:CGFloat = 0
+		for categories in menus {
+			
+			var row:CGFloat = 0
+			
+			// Icon
+			let iconView = UIImageView(frame: CGRectMake(tileSize*col, 0, tileSize, tileSize))
+			let iconString = String(format: "%@.%@", categories.0, settings[categories.0]!)
+			
+			iconView.image = UIImage(named: iconString)
+			iconView.contentMode = UIViewContentMode.ScaleAspectFit
+			iconView.backgroundColor = UIColor.yellowColor()
+			iconView.tag = 590 + Int(col)
+			selectionView.addSubview(iconView)
+			
+			col++
+		}
+		
+		self.view.addSubview(selectionView)
+		
+	}
 	
 	func loadMenu()
 	{
 		var col:CGFloat = 0
 		for categories in menus {
-			let menuHeight:CGFloat = CGFloat(categories.1.count) * tileSize
+			let menuHeight:CGFloat = CGFloat(categories.1.count + 1) * tileSize
 			let menuView = UIView(frame: CGRectMake(tileSize*col, screenHeight-menuHeight, tileSize, menuHeight))
 			menuView.tag = 66
 			var row:CGFloat = 0
@@ -159,6 +200,7 @@ class ViewController: UIViewController {
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeGeometric = settings["grid"]!
+		updateSelectionMenu(590)
 	}
 	
 	func optionMirror(sender:UIButton!)

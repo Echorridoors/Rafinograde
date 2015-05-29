@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D4CB1233-519C-48C7-A860-806148C8ABFC</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>Rafinograde</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>C4B9510189354C90DEC23DA69EC767D60DA12434</key>
 		<string>https://github.com/aliceffekt/Rafinograde.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>drawSource/Rafinograde.xcodeproj/project.xcworkspace</string>
+	<string>drawSource/Rafinograde.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>C4B9510189354C90DEC23DA69EC767D60DA12434</key>
