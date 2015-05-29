@@ -43,6 +43,8 @@ class ViewController: UIViewController {
 			settings[categories.0] = categories.1[0]
 		}
 		
+		optionsCollapse()
+		
 		templateStart()
 		loadMenu()
 		
@@ -55,7 +57,6 @@ class ViewController: UIViewController {
 		theDrawView.setNeedsDisplay()
 		
 		createSelectionMenu()
-		
 	}
 	
 	// MARK: Menu -
@@ -67,14 +68,12 @@ class ViewController: UIViewController {
 			if iconView.tag != iconTag { continue }
 			var iconView = iconView as! UIImageView
 			iconView.image = UIImage(named: iconString)
-			iconView.backgroundColor = UIColor.redColor()
 		}
 	}
 	
 	func createSelectionMenu()
 	{
 		selectionView = UIView(frame: CGRectMake(0, screenHeight-tileSize, tileSize*7, tileSize))
-		selectionView.backgroundColor = UIColor.redColor()
 		
 		var col:CGFloat = 0
 		for categories in menus {
@@ -87,7 +86,6 @@ class ViewController: UIViewController {
 			
 			iconView.image = UIImage(named: iconString)
 			iconView.contentMode = UIViewContentMode.ScaleAspectFit
-			iconView.backgroundColor = UIColor.yellowColor()
 			iconView.tag = 590 + Int(col)
 			selectionView.addSubview(iconView)
 			
@@ -131,6 +129,21 @@ class ViewController: UIViewController {
 			self.view.addSubview(menuView)
 			col++
 		}
+		
+		// Collapse/Expand menu
+		
+		let iconView = UIImageView(frame: CGRectMake(screenWidth-tileSize, screenHeight-tileSize, tileSize, tileSize))
+		iconView.image = UIImage(named: "toggle.expand")
+		iconView.contentMode = UIViewContentMode.ScaleAspectFit
+		iconView.tag = 977
+		self.view.addSubview(iconView)
+		
+		let optionView   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+		optionView.frame = CGRectMake(screenWidth-tileSize, screenHeight-tileSize, tileSize, tileSize)
+		optionView.addTarget(self, action: Selector("toggleMenu"), forControlEvents: UIControlEvents.TouchUpInside)
+		optionView.titleLabel?.font = UIFont.boldSystemFontOfSize(0)
+		self.view.addSubview(optionView)
+		
 	}
 	
 	func optionUnselect(targetTag:Int)
@@ -145,16 +158,11 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	func optionsHide()
-	{
-		
-	}
 	
 	func optionThickness(sender:UIButton!)
 	{
 		optionUnselect(sender.tag)
 		settings["thickness"] = sender.currentTitle
-		optionsHide()
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeThick = settings["thickness"]!
@@ -166,7 +174,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["system"] = sender.currentTitle
-		optionsHide()
 		
 		if( sender.currentTitle == "clear" ){
 			let randomColour = Int(arc4random_uniform(5))
@@ -192,7 +199,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["color"] = sender.currentTitle
-		optionsHide()
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeColor = settings["color"]!
@@ -205,7 +211,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["rounding"] = sender.currentTitle
-		optionsHide()
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeRounded = settings["rounding"]!
@@ -217,7 +222,6 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["grid"] = sender.currentTitle
-		optionsHide()
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeGeometric = settings["grid"]!
@@ -229,12 +233,57 @@ class ViewController: UIViewController {
 	{
 		optionUnselect(sender.tag)
 		settings["mirroir"] = sender.currentTitle
-		optionsHide()
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeMirror = settings["mirroir"]!
 		
 		updateSelectionMenu(591, iconString: String(format:"mirror.%@", sender.currentTitle!) )
+	}
+	
+	// MARK: Toggle -
+	
+	func toggleMenu()
+	{
+		if( settings["menu"] == "collapsed" ){
+			optionsExpand()
+		}
+		else{
+			optionsCollapse()
+		}
+	}
+	
+	func optionsCollapse()
+	{
+		settings["menu"] = "collapsed"
+		for targetView in self.view.subviews {
+			// Icon
+			if targetView.tag == 977 {
+				var iconView = targetView as! UIImageView
+				iconView.image = UIImage(named: "toggle.collapse")
+			}
+			// Options
+			if targetView.tag == 66 {
+				let targetView = targetView as! UIView
+				targetView.hidden = true
+			}
+		}
+	}
+	
+	func optionsExpand()
+	{
+		settings["menu"] = "expanded"
+		for targetView in self.view.subviews {
+			// Icon
+			if targetView.tag == 977 {
+				var iconView = targetView as! UIImageView
+				iconView.image = UIImage(named: "toggle.expand")
+			}
+			// Options
+			if targetView.tag == 66 {
+				let targetView = targetView as! UIView
+				targetView.hidden = false
+			}
+		}
 	}
 	
 	// MARK: Templates -
