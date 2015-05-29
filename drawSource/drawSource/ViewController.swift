@@ -53,9 +53,9 @@ class ViewController: UIViewController {
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeMirror = settings["mirror"]!
-		theDrawView.modeMirror = settings["grid"]!
-		theDrawView.modeMirror = settings["thickness"]!
-		theDrawView.modeMirror = settings["rounding"]!
+		theDrawView.modeGeometric = settings["grid"]!
+		theDrawView.modeThick = settings["thickness"]!
+		theDrawView.modeRounded = settings["rounding"]!
 		theDrawView.modeColor = settings["color"]!
 		theDrawView.setNeedsDisplay()
 		
