@@ -7,17 +7,22 @@
 //
 
 import UIKit
+import Foundation
+import AVFoundation
 
 var menus:Dictionary<String,Array<String>> = ["":["",""]]
 var settings:Dictionary<String,String> = ["":""]
 var selectionView:UIView!
 var currentColour:CGColor!
+var clickSound:SystemSoundID?
+var optionSound:SystemSoundID?
 
 class ViewController: UIViewController {
 		
 	@IBOutlet var gridView: UIView!
 	@IBOutlet var drawView: DrawView!
 	
+	@IBOutlet weak var notificationLabel: UILabel!
 	@IBOutlet var renderView: UIImageView!
 	@IBOutlet var outputView: UIView!
 	
@@ -60,7 +65,25 @@ class ViewController: UIViewController {
 		theDrawView.modeColor = settings["color"]!
 		theDrawView.setNeedsDisplay()
 		
-		hideOptions()
+		autoHideOptions()
+		
+		clickSound = createClickSound()
+		optionSound = createOptionSound()
+	}
+	
+	// MARK: Sounds -
+	
+	func createClickSound() -> SystemSoundID {
+		var soundID: SystemSoundID = 0
+		let soundURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), "click.1", "wav", nil)
+		AudioServicesCreateSystemSoundID(soundURL, &soundID)
+		return soundID
+	}
+	func createOptionSound() -> SystemSoundID {
+		var soundID: SystemSoundID = 0
+		let soundURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), "click.2", "wav", nil)
+		AudioServicesCreateSystemSoundID(soundURL, &soundID)
+		return soundID
 	}
 	
 	// MARK: Menu -
@@ -122,6 +145,7 @@ class ViewController: UIViewController {
 				UIView.animateWithDuration(0.2, animations: { targetView.frame = CGRectMake(targetView.frame.origin.x, self.screenHeight-(self.tileSize * CGFloat((targetView.subviews.count/2)+1)), self.tileSize, self.tileSize * CGFloat(targetView.subviews.count/2) ) }, completion: { finished in })
 			}
 		}
+		AudioServicesPlaySystemSound(optionSound!)
 	}
 	
 	func hideOptions()
@@ -130,6 +154,17 @@ class ViewController: UIViewController {
 			var targetView = targetView as! UIView
 			if targetView.tag == 66 {
 				UIView.animateWithDuration(0.2, animations: { targetView.frame = CGRectMake(targetView.frame.origin.x, self.screenHeight-self.tileSize, self.tileSize, 0 ) }, completion: { finished in })
+				targetView.clipsToBounds = true
+			}
+		}
+	}
+	
+	func autoHideOptions()
+	{
+		for targetView in self.view.subviews {
+			var targetView = targetView as! UIView
+			if targetView.tag == 66 {
+				targetView.frame = CGRectMake(targetView.frame.origin.x, self.screenHeight-self.tileSize, self.tileSize, 0 )
 				targetView.clipsToBounds = true
 			}
 		}
@@ -176,7 +211,7 @@ class ViewController: UIViewController {
 		
 		createSelectionMenu()
 		
-		// Collapse/Expand menu
+		// Clear
 		
 		let iconView = UIImageView(frame: CGRectMake(screenWidth-tileSize, screenHeight-tileSize, tileSize, tileSize))
 		iconView.image = UIImage(named: "system.clear")
@@ -189,6 +224,20 @@ class ViewController: UIViewController {
 		clearButton.setTitle("clear", forState: UIControlState.Normal)
 		clearButton.titleLabel?.font = UIFont.boldSystemFontOfSize(0)
 		self.view.addSubview(clearButton)
+		
+		// Clear
+		
+		let saveIconView = UIImageView(frame: CGRectMake(screenWidth-(tileSize*2), screenHeight-tileSize, tileSize, tileSize))
+		saveIconView.image = UIImage(named: "system.save")
+		saveIconView.contentMode = UIViewContentMode.ScaleAspectFit
+		self.view.addSubview(saveIconView)
+		
+		let saveButton   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+		saveButton.frame = CGRectMake(screenWidth-(tileSize*2), screenHeight-tileSize, tileSize, tileSize)
+		saveButton.addTarget(self, action: Selector("optionSystem:"), forControlEvents: UIControlEvents.TouchUpInside)
+		saveButton.setTitle("save", forState: UIControlState.Normal)
+		saveButton.titleLabel?.font = UIFont.boldSystemFontOfSize(0)
+		self.view.addSubview(saveButton)
 		
 	}
 	
@@ -211,11 +260,14 @@ class ViewController: UIViewController {
 		
 		updateSelectionMenu(592, iconString: String(format:"thickness.%@", sender.currentTitle!) )
 		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
 	}
 	
 	func optionSystem(sender:UIButton!)
 	{
 		settings["system"] = sender.currentTitle
+		
+		println(sender.currentTitle)
 		
 		if( sender.currentTitle == "clear" ){
 			let colours = [UIColorFromRGB(0xff0000).CGColor,UIColorFromRGB(0xefefef).CGColor,UIColorFromRGB(0xdddddd).CGColor,UIColorFromRGB(0x999999).CGColor]
@@ -228,6 +280,15 @@ class ViewController: UIViewController {
 			theDrawView.setNeedsDisplay()
 			updateMenuBackground()
 		}
+		else if sender.currentTitle == "save" {
+			notification("SAVED TO YOUR PICTURES")
+			UIGraphicsBeginImageContext(CGSizeMake(self.view.frame.width, self.view.frame.height))
+			outputView.layer.renderInContext(UIGraphicsGetCurrentContext())
+			let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+			UIGraphicsEndImageContext()
+			UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+		}
+		AudioServicesPlaySystemSound(clickSound!)
 		
 	}
 	
@@ -245,6 +306,7 @@ class ViewController: UIViewController {
 		
 		updateSelectionMenu(593, iconString: String(format:"color.%@", sender.currentTitle!) )
 		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
 	}
 	
 	func optionRounding(sender:UIButton!)
@@ -256,6 +318,7 @@ class ViewController: UIViewController {
 		
 		updateSelectionMenu(594, iconString: String(format:"rounding.%@", sender.currentTitle!) )
 		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
 	}
 	
 	func optionGrid(sender:UIButton!)
@@ -267,6 +330,7 @@ class ViewController: UIViewController {
 	
 		updateSelectionMenu(590, iconString: String(format:"grid.%@", sender.currentTitle!) )
 		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
 	}
 	
 	func optionMirror(sender:UIButton!)
@@ -278,6 +342,7 @@ class ViewController: UIViewController {
 		
 		updateSelectionMenu(591, iconString: String(format:"mirror.%@", sender.currentTitle!) )
 		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
 	}
 	
 	// MARK: Templates -
@@ -297,19 +362,15 @@ class ViewController: UIViewController {
 		outputView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		theDrawView.frame = CGRectMake(0, 0, screenWidth, screenHeight)
 		
+		notificationLabel.frame = CGRectMake(tileSize/5, screenHeight-tileSize*2, screenWidth, tileSize)
+		notificationLabel.text = ""
 	}
 	
-	@IBAction func optionSave(sender: AnyObject)
+	func notification(newText:String)
 	{
-		UIGraphicsBeginImageContext(CGSizeMake(self.view.frame.width, self.view.frame.height))
-		outputView.layer.renderInContext(UIGraphicsGetCurrentContext())
-		let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-	}
-	
-	@IBAction func modeContinuous(sender: AnyObject) {
-		
+		notificationLabel.text = newText
+		self.notificationLabel.alpha = 1
+		UIView.animateWithDuration(2, animations: { self.notificationLabel.alpha = 0 }, completion: { finished in })
 	}
 	
 	// MARK: - Misc

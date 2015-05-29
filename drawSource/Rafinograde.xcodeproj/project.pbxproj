@@ -14,6 +14,12 @@
 		033C9411199CFA160054AD08 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C9410199CFA160054AD08 /* DrawView.swift */; };
 		033C9413199CFFA30054AD08 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033C9412199CFFA30054AD08 /* Lines.swift */; };
 		5764A2861B1790B00079318B /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 5764A2851B1790B00079318B /* icons */; };
+		57B2CD2C1B19057800741029 /* segueFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 57B2CD291B19057800741029 /* segueFade.m */; };
+		57B2CD2D1B19057800741029 /* xxiivvSplash.m in Sources */ = {isa = PBXBuildFile; fileRef = 57B2CD2B1B19057800741029 /* xxiivvSplash.m */; };
+		57B2CD301B19064A00741029 /* splash.logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 57B2CD2E1B19064A00741029 /* splash.logo.png */; };
+		57B2CD311B19064A00741029 /* splash.tune.wav in Resources */ = {isa = PBXBuildFile; fileRef = 57B2CD2F1B19064A00741029 /* splash.tune.wav */; };
+		57B2CD331B1906EA00741029 /* click.1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 57B2CD321B1906EA00741029 /* click.1.wav */; };
+		57B2CD351B19080000741029 /* click.2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 57B2CD341B19080000741029 /* click.2.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +33,15 @@
 		033C9410199CFA160054AD08 /* DrawView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		033C9412199CFFA30054AD08 /* Lines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		5764A2851B1790B00079318B /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
-		57A444271B179ACF00E85D10 /* Rafinograde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Rafinograde.app; path = "/Users/VillaMoirai/Github/Rafinograde/drawSource/build/Debug-iphoneos/Rafinograde.app"; sourceTree = "<absolute>"; };
+		57B2CD281B19057800741029 /* segueFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = segueFade.h; path = splash/segueFade.h; sourceTree = "<group>"; };
+		57B2CD291B19057800741029 /* segueFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = segueFade.m; path = splash/segueFade.m; sourceTree = "<group>"; };
+		57B2CD2A1B19057800741029 /* xxiivvSplash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xxiivvSplash.h; path = splash/xxiivvSplash.h; sourceTree = "<group>"; };
+		57B2CD2B1B19057800741029 /* xxiivvSplash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = xxiivvSplash.m; path = splash/xxiivvSplash.m; sourceTree = "<group>"; };
+		57B2CD2E1B19064A00741029 /* splash.logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash.logo.png; path = splash/splash.logo.png; sourceTree = "<group>"; };
+		57B2CD2F1B19064A00741029 /* splash.tune.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = splash.tune.wav; path = splash/splash.tune.wav; sourceTree = "<group>"; };
+		57B2CD321B1906EA00741029 /* click.1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.1.wav; sourceTree = "<group>"; };
+		57B2CD341B19080000741029 /* click.2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = click.2.wav; sourceTree = "<group>"; };
+		57F561991B18DC1700B32286 /* Rafinograde.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rafinograde.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,12 +60,16 @@
 			children = (
 				033C93E6199CF5380054AD08 /* drawSource */,
 				033C93F9199CF5380054AD08 /* drawSourceTests */,
+				57F561991B18DC1700B32286 /* Rafinograde.app */,
 			);
 			sourceTree = "<group>";
 		};
 		033C93E6199CF5380054AD08 /* drawSource */ = {
 			isa = PBXGroup;
 			children = (
+				57B2CD341B19080000741029 /* click.2.wav */,
+				57B2CD321B1906EA00741029 /* click.1.wav */,
+				57B2CD271B19056800741029 /* Splash */,
 				5764A2851B1790B00079318B /* icons */,
 				033C93E9199CF5380054AD08 /* AppDelegate.swift */,
 				033C93EB199CF5380054AD08 /* ViewController.swift */,
@@ -89,6 +107,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		57B2CD271B19056800741029 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				57B2CD2E1B19064A00741029 /* splash.logo.png */,
+				57B2CD2F1B19064A00741029 /* splash.tune.wav */,
+				57B2CD281B19057800741029 /* segueFade.h */,
+				57B2CD291B19057800741029 /* segueFade.m */,
+				57B2CD2A1B19057800741029 /* xxiivvSplash.h */,
+				57B2CD2B1B19057800741029 /* xxiivvSplash.m */,
+			);
+			name = Splash;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,7 +137,7 @@
 			);
 			name = Rafinograde;
 			productName = drawSource;
-			productReference = 57A444271B179ACF00E85D10 /* Rafinograde.app */;
+			productReference = 57F561991B18DC1700B32286 /* Rafinograde.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -146,7 +177,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57B2CD301B19064A00741029 /* splash.logo.png in Resources */,
+				57B2CD351B19080000741029 /* click.2.wav in Resources */,
 				5764A2861B1790B00079318B /* icons in Resources */,
+				57B2CD331B1906EA00741029 /* click.1.wav in Resources */,
+				57B2CD311B19064A00741029 /* splash.tune.wav in Resources */,
 				033C93EF199CF5380054AD08 /* Main.storyboard in Resources */,
 				033C93F1199CF5380054AD08 /* Images.xcassets in Resources */,
 			);
@@ -163,6 +198,8 @@
 				033C9413199CFFA30054AD08 /* Lines.swift in Sources */,
 				033C9411199CFA160054AD08 /* DrawView.swift in Sources */,
 				033C93EA199CF5380054AD08 /* AppDelegate.swift in Sources */,
+				57B2CD2D1B19057800741029 /* xxiivvSplash.m in Sources */,
+				57B2CD2C1B19057800741029 /* segueFade.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
