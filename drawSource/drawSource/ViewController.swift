@@ -11,6 +11,7 @@ import UIKit
 var menus:Dictionary<String,Array<String>> = ["":["",""]]
 var settings:Dictionary<String,String> = ["":""]
 var selectionView:UIView!
+var currentColour:CGColor!
 
 class ViewController: UIViewController {
 		
@@ -60,7 +61,6 @@ class ViewController: UIViewController {
 		theDrawView.setNeedsDisplay()
 		
 		hideOptions()
-	
 	}
 	
 	// MARK: Menu -
@@ -119,7 +119,6 @@ class ViewController: UIViewController {
 				targetView.clipsToBounds = true
 			}
 			if targetView.tag == 66 && targetView.frame.origin.x == sender.frame.origin.x {
-				targetView.backgroundColor = UIColor.whiteColor()
 				UIView.animateWithDuration(0.2, animations: { targetView.frame = CGRectMake(targetView.frame.origin.x, self.screenHeight-(self.tileSize * CGFloat((targetView.subviews.count/2)+1)), self.tileSize, self.tileSize * CGFloat(targetView.subviews.count/2) ) }, completion: { finished in })
 			}
 		}
@@ -193,6 +192,16 @@ class ViewController: UIViewController {
 		
 	}
 	
+	func updateMenuBackground()
+	{
+		for targetView in self.view.subviews {
+			var targetView = targetView as! UIView
+			if targetView.tag == 66 {
+				targetView.backgroundColor = UIColor(CGColor: currentColour)
+			}
+		}
+	}
+	
 	func optionThickness(sender:UIButton!)
 	{
 		settings["thickness"] = sender.currentTitle
@@ -212,10 +221,12 @@ class ViewController: UIViewController {
 			let colours = [UIColorFromRGB(0xff0000).CGColor,UIColorFromRGB(0xefefef).CGColor,UIColorFromRGB(0xdddddd).CGColor,UIColorFromRGB(0x999999).CGColor]
 			let randomIndex = Int(arc4random_uniform(UInt32(colours.count)))
 			self.outputView.backgroundColor = UIColor(CGColor: colours[randomIndex])
+			currentColour = colours[randomIndex]
 			var theDrawView = drawView as DrawView
 			theDrawView.lines = []
 			renderView.image = UIImage(named: "")
 			theDrawView.setNeedsDisplay()
+			updateMenuBackground()
 		}
 		
 	}
