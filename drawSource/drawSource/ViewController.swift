@@ -40,8 +40,7 @@ class ViewController: UIViewController {
 			"thickness":["1","2","3","4","osc"],
 			"rounding":["round","square","none"],
 			"color":["black","red","cyan","white","chess"],
-			"system":["share","save","clear"],
-			"filter":[""]
+			"system":["share","save","clear"]
 		]
 		
 		// Set default settings
@@ -105,27 +104,52 @@ class ViewController: UIViewController {
 		var col:CGFloat = 0
 		for categories in menus {
 			
-			if categories.0 == "rounding" { col = 4 }
+			var menuViewFrame = CGRectMake(tileSize*0, 0, tileSize, tileSize)
+			var colMod = col
 			
-			if categories.0 != "system" && categories.0 != "filter" {
-				
+			if categories.0 == "rounding" {
+				menuViewFrame = CGRectMake(tileSize*0, 0, tileSize, tileSize)
+				colMod = 0
+			}
+			if categories.0 == "mirror" {
+				menuViewFrame = CGRectMake(tileSize*1, 0, tileSize, tileSize)
+				colMod = 1
+			}
+			if categories.0 == "thickness" {
+				menuViewFrame = CGRectMake(tileSize*2, 0, tileSize, tileSize)
+				colMod = 2
+			}
+			if categories.0 == "grid" {
+				menuViewFrame = CGRectMake(tileSize*3, 0, tileSize, tileSize)
+				colMod = 3
+			}
+			if categories.0 == "color" {
+				menuViewFrame = CGRectMake(tileSize*4, 0, tileSize, tileSize)
+				colMod = 4
+			}
+			if categories.0 == "system" {
+				menuViewFrame = CGRectMake(tileSize*7, 0, tileSize, tileSize)
+				colMod = 7
+			}
+			
+			
+			if categories.0 != "system" {
 				// Icon
-				let iconView = UIImageView(frame: CGRectMake(tileSize*col, 0, tileSize, tileSize))
+				let iconView = UIImageView(frame: menuViewFrame)
 				let iconString = String(format: "%@.%@", categories.0, settings[categories.0]!)
 				
 				iconView.image = UIImage(named: iconString)
 				iconView.contentMode = UIViewContentMode.ScaleAspectFit
-				iconView.tag = 590 + Int(col)
+				iconView.tag = 590 + Int(colMod)
 				selectionView.addSubview(iconView)
 				
 				// Button
 				let toggleButton   = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-				toggleButton.frame = CGRectMake(tileSize*col, 0, tileSize, tileSize)
+				toggleButton.frame = CGRectMake(tileSize*colMod, 0, tileSize, tileSize)
 				toggleButton.addTarget(self, action: Selector("toggleOption:"), forControlEvents: UIControlEvents.TouchUpInside)
 				selectionView.addSubview(toggleButton)
-				
 			}
-
+			
 			col++
 		}
 		
@@ -161,6 +185,7 @@ class ViewController: UIViewController {
 	
 	func autoHideOptions()
 	{
+		return
 		for targetView in self.view.subviews {
 			var targetView = targetView as! UIView
 			if targetView.tag == 66 {
@@ -172,15 +197,28 @@ class ViewController: UIViewController {
 	
 	func loadMenu()
 	{
+		println("!  MENU | Start")
+		self.view.backgroundColor = UIColor.yellowColor()
+		
 		var col:CGFloat = 0
 		for categories in menus {
+			
 			let menuHeight:CGFloat = CGFloat(categories.1.count + 1) * tileSize
 			
-			if categories.0 == "rounding" { col = 4 }
-			if categories.0 == "system" { col = 7 }
-			if categories.0 == "filter" { col = 5 }
+			var menuViewFrame = CGRectMake(tileSize*col, screenHeight-menuHeight, tileSize, menuHeight)
 			
-			let menuView = UIView(frame: CGRectMake(tileSize*col, screenHeight-menuHeight, tileSize, menuHeight))
+			if categories.0 == "rounding" { menuViewFrame = CGRectMake(tileSize*0, screenHeight-menuHeight, tileSize, menuHeight) }
+			if categories.0 == "mirror" { menuViewFrame = CGRectMake(tileSize*1, screenHeight-menuHeight, tileSize, menuHeight) }
+			if categories.0 == "thickness" { menuViewFrame = CGRectMake(tileSize*2, screenHeight-menuHeight, tileSize, menuHeight) }
+			if categories.0 == "grid" { menuViewFrame = CGRectMake(tileSize*3, screenHeight-menuHeight, tileSize, menuHeight) }
+			if categories.0 == "color" { menuViewFrame = CGRectMake(tileSize*4, screenHeight-menuHeight, tileSize, menuHeight) }
+			if categories.0 == "system" { menuViewFrame = CGRectMake(tileSize*7, screenHeight-menuHeight, tileSize, menuHeight) }
+			
+			println("+  MENU | \(categories.0) - \(menuViewFrame)")
+			
+			var menuView = UIView(frame: menuViewFrame)
+			menuView.backgroundColor = UIColor.redColor()
+			
 			menuView.tag = 66
 			var row:CGFloat = 0
 			for option in categories.1 {
@@ -225,7 +263,7 @@ class ViewController: UIViewController {
 		clearButton.titleLabel?.font = UIFont.boldSystemFontOfSize(0)
 		self.view.addSubview(clearButton)
 		
-		// Clear
+		// Save
 		
 		let saveIconView = UIImageView(frame: CGRectMake(screenWidth-(tileSize*2), screenHeight-tileSize, tileSize, tileSize))
 		saveIconView.image = UIImage(named: "system.save")
@@ -250,19 +288,6 @@ class ViewController: UIViewController {
 			}
 		}
 	}
-	
-	func optionThickness(sender:UIButton!)
-	{
-		settings["thickness"] = sender.currentTitle
-		
-		var theDrawView = drawView as DrawView
-		theDrawView.modeThick = settings["thickness"]!
-		
-		updateSelectionMenu(592, iconString: String(format:"thickness.%@", sender.currentTitle!) )
-		hideOptions()
-		AudioServicesPlaySystemSound(clickSound!)
-	}
-	
 	func optionSystem(sender:UIButton!)
 	{
 		settings["system"] = sender.currentTitle
@@ -296,19 +321,6 @@ class ViewController: UIViewController {
 	{
 	}
 	
-	func optionColor(sender:UIButton!)
-	{
-		settings["color"] = sender.currentTitle
-		
-		var theDrawView = drawView as DrawView
-		theDrawView.modeColor = settings["color"]!
-		theDrawView.setNeedsDisplay()
-		
-		updateSelectionMenu(593, iconString: String(format:"color.%@", sender.currentTitle!) )
-		hideOptions()
-		AudioServicesPlaySystemSound(clickSound!)
-	}
-	
 	func optionRounding(sender:UIButton!)
 	{
 		settings["rounding"] = sender.currentTitle
@@ -316,19 +328,7 @@ class ViewController: UIViewController {
 		var theDrawView = drawView as DrawView
 		theDrawView.modeRounded = settings["rounding"]!
 		
-		updateSelectionMenu(594, iconString: String(format:"rounding.%@", sender.currentTitle!) )
-		hideOptions()
-		AudioServicesPlaySystemSound(clickSound!)
-	}
-	
-	func optionGrid(sender:UIButton!)
-	{
-		settings["grid"] = sender.currentTitle
-		
-		var theDrawView = drawView as DrawView
-		theDrawView.modeGeometric = settings["grid"]!
-	
-		updateSelectionMenu(590, iconString: String(format:"grid.%@", sender.currentTitle!) )
+		updateSelectionMenu(590, iconString: String(format:"rounding.%@", sender.currentTitle!) )
 		hideOptions()
 		AudioServicesPlaySystemSound(clickSound!)
 	}
@@ -341,6 +341,44 @@ class ViewController: UIViewController {
 		theDrawView.modeMirror = settings["mirroir"]!
 		
 		updateSelectionMenu(591, iconString: String(format:"mirror.%@", sender.currentTitle!) )
+		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
+	}
+	
+	func optionThickness(sender:UIButton!)
+	{
+		settings["thickness"] = sender.currentTitle
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeThick = settings["thickness"]!
+		
+		updateSelectionMenu(592, iconString: String(format:"thickness.%@", sender.currentTitle!) )
+		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
+	}
+	
+	func optionGrid(sender:UIButton!)
+	{
+		settings["grid"] = sender.currentTitle
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeGeometric = settings["grid"]!
+		
+		updateSelectionMenu(593, iconString: String(format:"grid.%@", sender.currentTitle!) )
+		hideOptions()
+		AudioServicesPlaySystemSound(clickSound!)
+	}
+	
+	
+	func optionColor(sender:UIButton!)
+	{
+		settings["color"] = sender.currentTitle
+		
+		var theDrawView = drawView as DrawView
+		theDrawView.modeColor = settings["color"]!
+		theDrawView.setNeedsDisplay()
+		
+		updateSelectionMenu(594, iconString: String(format:"color.%@", sender.currentTitle!) )
 		hideOptions()
 		AudioServicesPlaySystemSound(clickSound!)
 	}
