@@ -24,7 +24,6 @@ NSString *supportUrl;
 {
     [super viewDidLoad];
 	[self start];
-	[self splashClose]; // todo
 }
 
 -(void)start

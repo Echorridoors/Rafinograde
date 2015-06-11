@@ -49,12 +49,14 @@ class ViewController: UIViewController {
 		}
 		
 		templateStart()
-		loadMenu()
 		
 		settings["color"] = "chess"
 		settings["rounding"] = "round"
 		settings["mirror"] = "x"
 		settings["thickness"] = "osc"
+		settings["grid"] = "freehand"
+		
+		loadMenu()
 		
 		var theDrawView = drawView as DrawView
 		theDrawView.modeMirror = settings["mirror"]!
@@ -133,6 +135,9 @@ class ViewController: UIViewController {
 			}
 			
 			
+			println("\(categories.0) - \(settings[categories.0]!)")
+			
+			
 			if categories.0 != "system" {
 				// Icon
 				let iconView = UIImageView(frame: menuViewFrame)
@@ -185,7 +190,6 @@ class ViewController: UIViewController {
 	
 	func autoHideOptions()
 	{
-		return
 		for targetView in self.view.subviews {
 			var targetView = targetView as! UIView
 			if targetView.tag == 66 {
@@ -217,7 +221,6 @@ class ViewController: UIViewController {
 			println("+  MENU | \(categories.0) - \(menuViewFrame)")
 			
 			var menuView = UIView(frame: menuViewFrame)
-			menuView.backgroundColor = UIColor.redColor()
 			
 			menuView.tag = 66
 			var row:CGFloat = 0
